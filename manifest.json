@@ -1,0 +1,28 @@
+{
+    "background_color": "#ffffff",
+    "categories": ["lifestyle", "ecommerce","business"],
+    "description": "Esta es una PWA para el Ecommerce",
+    "dir": "ltr",
+    "display_override": ["standalone", "fullscreen"],
+    "display": "standalone",
+    "icons": [
+      {
+        "src": "https://res.cloudinary.com/react-romel/image/upload/v1654738341/productos/android-launchericon-192-192_idwzz9.png",
+        "type": "image/png",
+        "sizes": "192x192"
+      },
+      {
+        "src": "https://res.cloudinary.com/react-romel/image/upload/v1654738345/productos/android-launchericon-512-512_cjj66h.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+    ],
+    "lang": "es-MX",
+    "name": "Ecommerce",
+    "orientation": "portrait",
+    "prefer_related_application": false,
+    "scope": "/",
+    "short_name": "Ecommerce Tesis",
+    "start_url": "/",
+    "theme_color": "blue"
+  }
