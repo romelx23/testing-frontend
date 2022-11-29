@@ -1,23 +1,20 @@
 import { FormikErrors, useFormik } from "formik";
-import React, { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import { LayoutProfile } from "../../components/layout";
 import { fetchContoken, fetchSintoken } from "../../helpers";
-import { CategoryI, CategoryResponse } from "../../interfaces";
-import { getCategories } from "../../helpers/products";
+import { CategoryI } from "../../interfaces";
 import Swal from "sweetalert2";
 import { usePaginate } from "../../hooks";
 import { useCategories } from "../../hooks/useCategories";
-import { AuthContext } from "../../context/auth";
 interface FormValues {
   name: string;
+  description: string;
 }
 
 export const CategoryAdminPage = () => {
   const { categories, getCategories } = useCategories();
   const [active, setActive] = useState(false);
   const [select, setSelect] = useState({} as CategoryI);
-  const { user } = useContext(AuthContext);
-  const canActions = user.rol === "ADMIN_ROLE";
   const {
     prevPage,
     nextPage,
@@ -40,6 +37,7 @@ export const CategoryAdminPage = () => {
   } = useFormik({
     initialValues: {
       name: "",
+      description: "",
     },
     validate: (values: FormValues) => {
       let errors: FormikErrors<FormValues> = {};
@@ -48,6 +46,9 @@ export const CategoryAdminPage = () => {
       }
       if (values.name.length < 3 || values.name.length > 20) {
         errors.name = "La Categoría debe tener entre 3 y 20 caracteres";
+      }
+      if (!values.description) {
+        errors.description = "La descripción es requerida";
       }
 
       return errors;
@@ -58,7 +59,7 @@ export const CategoryAdminPage = () => {
   });
   // console.log(values,"values");
   const submitCategory = async () => {
-    const categoria = categories.find((c) => c.nombre === values.name);
+    const categoria = categories.find((c) => c.name === values.name);
     if (categoria) {
       Swal.fire({
         title: "Error",
@@ -68,48 +69,50 @@ export const CategoryAdminPage = () => {
       });
       return;
     }
-    active
+    !active
       ? Swal.fire({
-          title: "¿Estás seguro?",
-          text: "¿Deseas guardar la Categoría?",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Si",
-          cancelButtonText: "No",
-        }).then((result) => {
-          if (result.value) {
-            createCategoria();
-          }
-        })
+        title: "¿Estás seguro?",
+        text: "¿Deseas guardar la Categoría?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si",
+        cancelButtonText: "No",
+      }).then((result) => {
+        if (result.value) {
+          createCategoria();
+        }
+      })
       : Swal.fire({
-          title: "¿Estás seguro?",
-          text: "¿Deseas editar la Categoría?",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Si",
-          cancelButtonText: "No",
-        }).then((result) => {
-          if (result.value) {
-            updateCatgoria(select._id);
-          }
-        });
+        title: "¿Estás seguro?",
+        text: "¿Deseas editar la Categoría?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si",
+        cancelButtonText: "No",
+      }).then((result) => {
+        if (result.value) {
+          updateCatgoria(select._id);
+        }
+      });
   };
 
   const createCategoria = async () => {
     try {
-      const resp = await fetchSintoken(
-        `api/categorias`,
+      const resp = await fetchContoken(
+        `api/categories`,
         {
-          nombre: values.name,
+          name: values.name,
+          description: values.description,
         },
         "POST"
       );
       setValues({
         name: "",
+        description: "",
       });
       setTouched({
         name: false,
@@ -134,7 +137,7 @@ export const CategoryAdminPage = () => {
   };
 
   const deleteCategoría = async (id: string) => {
-    const resp = await fetchContoken(`api/categorias/${id}`, {}, "DELETE");
+    const resp = await fetchContoken(`api/categories/${id}`, {}, "DELETE");
     const data = await resp!.json();
     Swal.fire({
       title: "Eliminado",
@@ -148,9 +151,10 @@ export const CategoryAdminPage = () => {
   const updateCatgoria = async (id: string) => {
     try {
       const resp = await fetchContoken(
-        `api/categorias/${id}`,
+        `api/categories/${id}`,
         {
-          nombre: values.name,
+          name: values.name,
+          description: values.description,
         },
         "PUT"
       );
@@ -163,6 +167,7 @@ export const CategoryAdminPage = () => {
       });
       setValues({
         name: "",
+        description: "",
       });
       setTouched({
         name: false,
@@ -201,7 +206,8 @@ export const CategoryAdminPage = () => {
   const setCategory = (categoria: CategoryI) => {
     setActive(true);
     setValues({
-      name: categoria.nombre,
+      name: categoria.name,
+      description: categoria.description,
     });
     setSelect(categoria);
   };
@@ -209,6 +215,7 @@ export const CategoryAdminPage = () => {
   const handleCancel = () => {
     setValues({
       name: "",
+      description: "",
     });
     setActive(false);
     setSelect({} as CategoryI);
@@ -240,6 +247,26 @@ export const CategoryAdminPage = () => {
             {touched.name && errors.name && (
               <p className="text-red-600 text-left max-w-md w-full">
                 {errors.name}
+              </p>
+            )}
+            <div className="text-left mb-2">
+              <label htmlFor="description" className="mb-2">
+                Descripción de la Categoría
+              </label>
+              <input
+                type="text"
+                name="description"
+                id="description"
+                value={values.description}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className="w-full border-2 border-gray-300 px-2 py-1"
+                placeholder="Ingrese el nombre de la categoría"
+              />
+            </div>
+            {touched.description && errors.description && (
+              <p className="text-red-600 text-left max-w-md w-full">
+                {errors.description}
               </p>
             )}
             {active ? (
@@ -292,7 +319,7 @@ export const CategoryAdminPage = () => {
                     <th className="th">ID</th>
                     <th className="th">Nombre</th>
                     <th className="th">Estado</th>
-                    {canActions && <th className="th">Acciones</th>}
+                    <th className="th">Acciones</th>
                   </tr>
                 </thead>
                 <tbody className="">
@@ -309,35 +336,33 @@ export const CategoryAdminPage = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                         <div className=" leading-5 text-white text-left">
-                          {category.nombre.toLocaleLowerCase()}
+                          {category.name.toLocaleLowerCase()}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-no-wrap border-b text-white border-gray-500 leading-5 text-left">
                         activado
                       </td>
-                      {canActions && (
-                        <td className="td">
-                          <div className="flex gap-2 items-center">
-                            <button
-                              onClick={() => {
-                                setCategory(category);
-                              }}
-                              className="btn border-blue-500 text-blue-500 hover:bg-blue-700"
-                            >
-                              <i className="fas fa-edit"></i>
-                            </button>
+                      <td className="td">
+                        <div className="flex gap-2 items-center">
+                          <button
+                            onClick={() => {
+                              setCategory(category);
+                            }}
+                            className="btn border-blue-500 text-blue-500 hover:bg-blue-700"
+                          >
+                            <i className="fas fa-edit"></i>
+                          </button>
 
-                            <button
-                              onClick={() => {
-                                handleDelete(category._id);
-                              }}
-                              className="btn hover:bg-red-700 border-red-500 text-red-500"
-                            >
-                              <i className="fas fa-trash-alt"></i>
-                            </button>
-                          </div>
-                        </td>
-                      )}
+                          <button
+                            onClick={() => {
+                              handleDelete(category._id);
+                            }}
+                            className="btn hover:bg-red-700 border-red-500 text-red-500"
+                          >
+                            <i className="fas fa-trash-alt"></i>
+                          </button>
+                        </div>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -351,9 +376,8 @@ export const CategoryAdminPage = () => {
                 {Array.from({ length: quantity }, (_, i) => (
                   <li
                     key={i}
-                    className={`btn-page ${
-                      i + 1 === currentPage ? "active" : ""
-                    }`}
+                    className={`btn-page ${i + 1 === currentPage ? "active" : ""
+                      }`}
                     onClick={() => {
                       handleSearchPage(i);
                     }}

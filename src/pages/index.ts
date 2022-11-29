@@ -27,13 +27,16 @@ export * from './admin/MarketAddPage';
 export * from './admin/MarketPage';
 export * from './admin/DashboardOrderPage';
 export * from './admin/OrderEditPage';
+export * from './admin/ProvidersPage';
+export * from './admin/ProviderActionPage';
+export * from './admin/OrderPage';
 
 // User Page
 export * from './user/ProfilePage';
 export * from './user/UpadateProfilePage';
 export * from './user/ConfigurePage';
 export * from './user/DashboardPage';
-export * from './user/OrderPage';
+// export * from './user/OrderPage';
 export * from './user/UpdatePassPage';
 
 // Others

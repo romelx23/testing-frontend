@@ -18,18 +18,15 @@ export const AppRouter = () => {
 
   // const [checking, setChecking] = useState(false);
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
   useEffect(() => {
     startCheking();
     console.log("startCheking");
-    // localStorage.setItem("uid", "123");
-  }, [user.nombre]);
+  }, [user.name]);
 
   if (checking) {
     return (
       <div
-      className="loader-page"
+        className="loader-page"
       >
         <h1
           className="
@@ -40,7 +37,12 @@ export const AppRouter = () => {
         >
           Espere....
         </h1>
-        <Spinner/>
+        <img
+          className="h-20 w-20"
+          src="https://media.discordapp.net/attachments/839620709517230081/1030715926515027988/animation_500_l99gx4de.gif"
+          alt="La sed nocturna"
+        />
+        <Spinner />
       </div>
     );
   }

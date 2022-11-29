@@ -34,7 +34,7 @@ export const OrderEditPage = () => {
 
       return errors;
     },
-    onSubmit: () => {},
+    onSubmit: () => { },
   });
   const navigate = useNavigate();
   const { id } = useParams();
@@ -97,7 +97,7 @@ export const OrderEditPage = () => {
                 <button
                   type="button"
                   className="w-full btn my-2 bg-gray-500 text-white hover:bg-gray-700"
-                  //   onClick={handleCancel}
+                //   onClick={handleCancel}
                 >
                   Cancelar
                 </button>
@@ -105,11 +105,11 @@ export const OrderEditPage = () => {
             </div>
           </form>
           <div className="px-2">
-            <ListProducts 
-            title="Productos"
-            quantity={5}
-            productsProps={products} 
-            topTitle="Selecciones los productos que desea agregar al pedido, si desea"
+            <ListProducts
+              title="Productos"
+              quantity={5}
+              productsProps={products}
+              topTitle="Selecciones los productos que desea agregar al pedido, si desea"
             />
           </div>
         </div>
@@ -162,70 +162,70 @@ export const OrderEditPage = () => {
           <p className="text-left ml-6">
             <span className="font-semibold">Estado:</span> {orderDetail.status}
           </p>
-          <div className="overflow-x-auto">          
-          <div className="flex flex-col pl-4 md:pl-0 min-w-full">
-            <table>
-              <thead>
-                <tr>
-                  <th>Item</th>
-                  <th>Nombre</th>
-                  <th>Precio</th>
-                  <th>Cantidad</th>
-                  <th>Imagen</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                {detail.map((item, i) => {
-                  return (
-                    <tr key={item._id}>
-                      <td>
-                        <p className="font-semibold">{i + 1}.-</p>
-                      </td>
-                      <td>
-                        <p className="text-left">{item.producto.nombre}</p>
-                      </td>
-                      <td>
-                        <p>S/.{item.precio.toFixed(2)}</p>
-                      </td>
-                      <td>
-                        <p>x{item.cantidad}</p>
-                      </td>
-                      <td className="flex justify-center items-center">
-                        <img
-                          className="w-12 h-12 border"
-                          alt={item.producto.nombre}
-                          src={item.producto.img}
-                        />
-                      </td>
-                      <td>
-                        <div className="space-x-2">
-                          <button
-                            className="btn border-blue-500 text-blue-500 hover:bg-blue-700"
-                            onClick={() => handleDelete(item._id)}
-                          >
-                            <i className="fas fa-plus"></i>
-                          </button>
-                          <button
-                            className="btn border-blue-500 text-blue-500 hover:bg-blue-700"
-                            onClick={() => handleDelete(item._id)}
-                          >
-                            <i className="fas fa-minus"></i>
-                          </button>
-                          <button
-                            className="btn hover:bg-red-700 border-red-500 text-red-500"
-                            onClick={() => handleDelete(item._id)}
-                          >
-                            <i className="fas fa-trash-alt"></i>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+          <div className="overflow-x-auto">
+            <div className="flex flex-col pl-4 md:pl-0 min-w-full">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Imagen</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {detail.map((item, i) => {
+                    return (
+                      <tr key={item._id}>
+                        <td>
+                          <p className="font-semibold">{i + 1}.-</p>
+                        </td>
+                        <td>
+                          <p className="text-left">{item.producto.name}</p>
+                        </td>
+                        <td>
+                          <p>S/.{item.precio.toFixed(2)}</p>
+                        </td>
+                        <td>
+                          <p>x{item.cantidad}</p>
+                        </td>
+                        <td className="flex justify-center items-center">
+                          <img
+                            className="w-12 h-12 border"
+                            alt={item.producto.name}
+                            src={item.producto.img}
+                          />
+                        </td>
+                        <td>
+                          <div className="space-x-2">
+                            <button
+                              className="btn border-blue-500 text-blue-500 hover:bg-blue-700"
+                              onClick={() => handleDelete(item._id)}
+                            >
+                              <i className="fas fa-plus"></i>
+                            </button>
+                            <button
+                              className="btn border-blue-500 text-blue-500 hover:bg-blue-700"
+                              onClick={() => handleDelete(item._id)}
+                            >
+                              <i className="fas fa-minus"></i>
+                            </button>
+                            <button
+                              className="btn hover:bg-red-700 border-red-500 text-red-500"
+                              onClick={() => handleDelete(item._id)}
+                            >
+                              <i className="fas fa-trash-alt"></i>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

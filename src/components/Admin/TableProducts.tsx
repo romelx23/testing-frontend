@@ -11,7 +11,7 @@ interface Props {
 
 export const TableProducts: FC<Props> = ({ products }) => {
   const [productos, setProductos] = useState(products);
-  const {numberPage,numberLastPage,searchItemsInput,items,prevPage,nextPage,search,currentPage}=usePaginate(productos);
+  const { numberPage, numberLastPage, searchItemsInput, items, prevPage, nextPage, search, currentPage } = usePaginate(productos);
   const { user } = useContext(AuthContext);
   const handlePrint = () => {
     window.print();
@@ -19,7 +19,7 @@ export const TableProducts: FC<Props> = ({ products }) => {
   // Agregar Funcion Eliminar producto
   const deleteProduct = async (id: string) => {
     try {
-      const resp = await fetchContoken(`api/productos/${id}`, {}, "DELETE");
+      const resp = await fetchContoken(`api/products/${id}`, {}, "DELETE");
       const product = await resp!.json();
       const productDel: Producto[] = productos.filter(
         (producto) => producto._id !== id
@@ -84,7 +84,7 @@ export const TableProducts: FC<Props> = ({ products }) => {
 
   return (
     <div className="w-full">
-      <div className="flex flex-col  mx-6">
+      <div className="flex flex-col mx-6">
         <div className="flex justify-between">
           <h1 className="text-left mb-2 text-xl font-bold">
             Gestión Productos
@@ -108,7 +108,7 @@ export const TableProducts: FC<Props> = ({ products }) => {
             <h1 className="font-semibold">Agregar Producto</h1>
             <Link
               to={
-                user.rol === "ADMIN_ROLE"
+                user.role.name === "ADMIN_roleE"
                   ? "/admin/product/add"
                   : "/gestion/producto/agregar"
               }
@@ -144,7 +144,7 @@ export const TableProducts: FC<Props> = ({ products }) => {
                 }
               </tr>
             </thead>
-            <tbody className="">
+            <tbody className="w-full">
               {items.map((product, i) => (
                 <tr className="font-semibold text-lg" key={product._id}>
                   <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 print:border-none">
@@ -158,20 +158,20 @@ export const TableProducts: FC<Props> = ({ products }) => {
                   </td>
                   <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                     <div className=" leading-5 text-white text-left">
-                      {product.nombre}
+                      {product.name}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-no-wrap border-b text-white border-gray-500  leading-5">
-                    {product.precio}
+                    {product.price}
                   </td>
                   <td className="px-6 py-4 whitespace-no-wrap border-b text-white border-gray-500 leading-5 text-left">
-                    {product.descripcion}
+                    {product.description}
                   </td>
                   <td className="px-6 py-4 whitespace-no-wrap border-b text-white border-gray-500  leading-5">
-                    {product.categoria.nombre}
+                    {product.category.name}
                   </td>
                   <td className="px-6 py-4 whitespace-no-wrap border-b text-white border-gray-500  leading-5">
-                    {product.marca ? product.marca.nombre : ""}
+                    {product.brand ? product.brand.name : ""}
                   </td>
                   <td className="px-6 py-4 whitespace-no-wrap border-b text-white border-gray-500  leading-5">
                     <img
@@ -190,7 +190,7 @@ export const TableProducts: FC<Props> = ({ products }) => {
                     <div className="flex justify-center gap-2 items-center">
                       <Link
                         to={
-                          user.rol === "ADMIN_ROLE"
+                          user.role.name === "ADMIN_roleE"
                             ? `${`/admin/product/${product._id}`}`
                             : `${`/gestion/producto/${product._id}`}`
                         }
@@ -210,8 +210,9 @@ export const TableProducts: FC<Props> = ({ products }) => {
                 </tr>
               ))}
               {items.length <= 0 && (
-                <tr className="font-semibold text-lg columns-4">
-                  <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 print:border-none">
+                <tr
+                  className="font-semibold text-lg py-2 flex justify-center">
+                  <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 print:border-none col-span-5">
                     <p className="text-white">
                       {" "}
                       No hay productos con ese nombre

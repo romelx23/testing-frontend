@@ -14,24 +14,24 @@ import {
 
 export const UserPage = () => {
   const [user, setUser] = useState<Usuario[]>([]);
-  const {user:userContext}=useContext(AuthContext);
-  const {items,nextPage,prevPage,currentPage,search,searchItemsInput}=usePaginate(user);
+  const { user: userContext } = useContext(AuthContext);
+  const { items, nextPage, prevPage, currentPage, search, searchItemsInput } = usePaginate(user);
 
   const handleUsers = async () => {
     const resp = await fetchSintoken(
-      `api/usuarios?desde=0&limit=20`,
+      `api/users?offset=0&limit=20`,
       {},
       "GET"
     );
     const data: UsuariosResponse = await resp!.json();
     // console.log(resp);
-    setUser(data.usuario);
+    setUser(data.users);
     // console.log(data);
   };
 
   const deleteUser = async (id: string) => {
     try {
-      const resp = await fetchContoken(`api/usuarios/${id}`, {}, "DELETE");
+      const resp = await fetchContoken(`api/users/${id}`, {}, "DELETE");
       const data: UsuariosResponse = await resp!.json();
       console.log(data);
       handleUsers();
@@ -39,9 +39,9 @@ export const UserPage = () => {
       console.log(error);
     }
   };
-  
-  const handleDelete=(id:string)=>{
-    const repite=user.filter(item=>item.uid!==userContext.uid);
+
+  const handleDelete = (id: string) => {
+    const repite = user.filter(item => item.uuid !== userContext.uuid);
     // if(repite){
     //   Swal.fire({
     //     title: "¿Estas seguro?",
@@ -70,7 +70,7 @@ export const UserPage = () => {
 
   const filteredUsers = () => {
     const filtered = user.filter((user) =>
-      user.nombre.toLowerCase().includes(search.toLowerCase())
+      user.name.toLowerCase().includes(search.toLowerCase())
     );
     return filtered;
   };
@@ -111,7 +111,7 @@ export const UserPage = () => {
                       ID
                     </th>
                     <th className="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">
-                      Nombre
+                      name
                     </th>
                     <th className="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">
                       Correo
@@ -138,7 +138,7 @@ export const UserPage = () => {
                 </thead>
                 <tbody className="">
                   {items.map((usuario, i) => (
-                    <tr className="font-semibold text-lg" key={usuario.uid}>
+                    <tr className="font-semibold text-lg" key={usuario.uuid}>
                       <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 print:border-none">
                         <div className="flex items-center">
                           <div>
@@ -148,11 +148,11 @@ export const UserPage = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                         <div className=" leading-5 text-white text-left">
-                          {usuario.nombre.toLocaleLowerCase()}
+                          {usuario.name.toLocaleLowerCase()}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-no-wrap border-b text-white border-gray-500 leading-5 text-left">
-                        {usuario.correo}
+                        {usuario.email}
                       </td>
                       <td className="px-6 py-4 whitespace-no-wrap border-b text-white border-gray-500 leading-5 text-left">
                         {usuario.telefono === 0
@@ -163,31 +163,32 @@ export const UserPage = () => {
                         {usuario.estado ? "Activo" : "Inactivo"}
                       </td>
                       <td className="px-6 py-4 whitespace-no-wrap border-b text-white border-gray-500 leading-5 text-left">
-                        {usuario.rol ? usuario.rol : "aún no tiene rol"}
+                        {usuario.role.name ? usuario.role.name : "aún no tiene rol"}
                       </td>
                       <td className="px-6 py-4 whitespace-no-wrap border-b text-white border-gray-500 leading-5 text-left">
                         <img
                           src={
-                            usuario.img
-                              ? usuario.img
+                            usuario.image
+                              ? usuario.image
                               : "https://jsl-online.com/wp-content/uploads/2017/01/placeholder-user.png"
                           }
                           alt="imagen"
-                          title={usuario.nombre}
+                          title={usuario.name}
                           className="w-12 h-12 object-cover"
                         />
                       </td>
                       <td className="px-6 py-4 whitespace-no-wrap border-b text-white border-gray-500 leading-5 text-left">
-                        <SelectRole
+                        {/* <SelectRole
                           usuario={usuario}
                           handleUsers={handleUsers}
-                        />
+                        /> */}
+                        {usuario.role.name}
                       </td>
                       <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5 space-x-2 print:hidden">
                         <div className="flex gap-2 items-center">
                           <button
                             onClick={() => {
-                              handleDelete(usuario.uid);
+                              handleDelete(usuario.uuid);
                             }}
                             className="btn hover:bg-red-700 border-red-500 text-red-500"
                           >
@@ -206,12 +207,12 @@ export const UserPage = () => {
                   Atrás
                 </li>
                 <li className="px-2">
-                        {
-                          <p className="text-white">
-                            {currentPage + 1} de {currentPage + 6}
-                          </p>
-                        }
-                      </li>
+                  {
+                    <p className="text-white">
+                      {currentPage + 1} de {currentPage + 6}
+                    </p>
+                  }
+                </li>
                 <li onClick={nextPage} className="btn-next">
                   Adelante
                 </li>

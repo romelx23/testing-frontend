@@ -7,28 +7,28 @@ import { baseUrl } from '../../utils';
 
 export const DetailProductPage = () => {
   // Actualizar el producto
-  const navigate= useNavigate();
+  const navigate = useNavigate();
   const { id } = useParams();
   const [producto, setProducto] = useState<Producto>({} as Producto);
   const getProductId = async () => {
-     try{
-      const product = `${baseUrl}/api/productos/${id}`;
-      const resp = await fetch(product);
-      const { producto }: ProductoId = await resp.json();
-      if(producto._id){
+    try {
+      const url = `${baseUrl}/api/products/${id}`;
+      const resp = await fetch(url);
+      const { product }: ProductoId = await resp.json();
+      if (product._id) {
         setProducto(producto);
-      }else{
+      } else {
         navigate('/admin/products');
       }
-     }catch(error){
-        console.log(error);
-      }
-   };
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
- useEffect(() => {
-     getProductId();
-   }, []);
-    
+  useEffect(() => {
+    getProductId();
+  }, []);
+
   return (
     <LayoutProfile>
       <FormProducts producto={producto} />

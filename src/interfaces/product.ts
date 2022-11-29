@@ -12,33 +12,33 @@ export interface ProductI {
 // prod
 export interface ProductsI {
   total: number;
-  productos: Producto[];
+  products: Producto[];
 }
 
 export interface Producto {
-  precio: number;
+  price: number;
   disponible: boolean;
   _id: string;
-  nombre: string;
-  descripcion: string;
-  usuario: string;
-  categoria: Categoria;
+  name: string;
+  description: string;
+  user: string;
+  category: Categoria;
   stock: number;
   img?: string;
-  marca: Marca;
+  brand: Marca;
   bodega:Market;
 }
 
 export interface ProductoBodega{
   success:boolean;
-  productos:Producto[]
+  products:Producto[]
 }
 
 export interface ProductoCarrito {
   precio: number;
   disponible: boolean;
   _id: string;
-  nombre: string;
+  name: string;
   descripcion?: string;
   usuario: string;
   categoria: Categoria;
@@ -48,31 +48,31 @@ export interface ProductoCarrito {
 }
 
 export interface ProductoId {
-  producto: Producto;
+  product: Producto;
   bodega: Market;
 }
 
 export interface Categoria {
   _id: string;
-  nombre: string;
+  name: string;
 }
 
 export interface Marca {
   _id: string;
-  nombre: string;
+  name: string;
 }
 
 export interface ProductoResponse {
   activo: boolean;
-  categoria: string;
-  descripcion: string;
+  category: string;
+  description: string;
   disponible: boolean;
   idProducto: string;
   img: string;
   mac: string;
-  nombre: string;
-  precio: number;
-  usuario: string;
+  name: string;
+  price: number;
+  user: string;
   _id: string;
 }
 
@@ -108,16 +108,18 @@ export interface ProductoOrder{
 
 export interface CategoryForm{
   name:string;
+  description: string;
 }
 
 export interface CategoryI {
-  nombre: string;
+  name: string;
+  description: string;
   _id: string;
   usuario: string;
 }
 
 export interface CategoryResponse {
-  categorias: CategoryI[];
+  categories: CategoryI[];
   total: number;
 }
 

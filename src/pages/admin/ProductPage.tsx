@@ -6,9 +6,8 @@ import { AuthContext } from '../../context/auth';
 import { useProducts } from '../../hooks';
 
 export const ProductPage = () => {
-  const {user}=useContext(AuthContext);
-  const { productsMarket,products,loading } = useProducts();
-  const productsByRole = user.rol === 'ADMIN_ROLE' ? products : productsMarket;
+  const { user } = useContext(AuthContext);
+  const { products, loading } = useProducts();
   return (
     <LayoutProfile>
       <div className="min-h-[85vh]">
@@ -18,7 +17,7 @@ export const ProductPage = () => {
               message="Cargando Productos"
             />
           ) : (
-            <TableProducts products={productsByRole}/>
+            <TableProducts products={products} />
           )
         }
       </div>

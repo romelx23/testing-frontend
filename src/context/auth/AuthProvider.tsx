@@ -20,24 +20,26 @@ export const Auth_INITIAL_STATE: AuthState = {
 
 export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(AuthReducer, Auth_INITIAL_STATE);
- 
+
   const startLogin = async (email: string, password: string) => {
     const resp = await fetchSintoken(
       "api/auth/login",
-      { correo: email, password },
+      { email, password },
       "POST"
     );
     const body: UserBody = await resp!.json();
-    // console.log(body);
+    console.log(body);
     if (body.token) {
-      const { token, usuario } = body;
+      const { token, user } = body;
       localStorage.setItem("token", body.token);
       dispatch({
         type: "[Auth] - Login",
         payload: {
-          user: usuario,
+          user: user,
         },
       });
+      checkingStart();
+      // checkingFinish();
     } else {
       return Swal.fire("Error", "Error al Loguearse", "error");
     }
@@ -50,26 +52,25 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     password2: string
   ) => {
     const resp = await fetchSintoken(
-      "api/usuarios",
+      "api/users",
       {
-        nombre: name,
-        correo: email,
+        name,
+        email,
         password,
-        password2,
-        img:"https://jsl-online.com/wp-content/uploads/2017/01/placeholder-user.png",
-        rol: "CLIENTE_ROLE",
+        image: "https://jsl-online.com/wp-content/uploads/2017/01/placeholder-user.png",
+        rol: "USER_ROLE",
       },
       "POST"
     );
     const body: UserBody = await resp!.json();
     console.log(body);
     if (body.token) {
-      const { token, usuario } = body;
+      const { token, user } = body;
       localStorage.setItem("token", token);
       dispatch({
         type: "[Auth] - Register",
         payload: {
-          user: usuario,
+          user: user,
         },
       });
     } else {
@@ -80,14 +81,16 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const startCheking = async () => {
     const resp = await fetchContoken("api/auth");
     const body: UserBody = await resp!.json();
+    // console.log(body, "body");
     if (body.token) {
-      // console.log(body,"body");
-      const { token, usuario } = body;
+      const { token, user } = body;
       localStorage.setItem("token", body.token);
       dispatch({
         type: "[Auth] - Login",
         payload: {
-          user: usuario,
+          user: {
+            ...user,
+          },
         },
       });
       checkingFinish();
@@ -96,11 +99,13 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
-  const checkingStart = () =>
+  const checkingStart = () => {
     dispatch({
       type: "[Auth] - Checking",
       payload: { checking: true },
     });
+  }
+
   const checkingFinish = () =>
     dispatch({
       type: "[Auth] - Checking",
@@ -112,7 +117,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
       type: "[Auth] - Logout",
     });
   };
-  const updateUser = (user: User) =>{
+  const updateUser = (user: User) => {
     dispatch({
       type: "[User] - Update",
       payload: { user },

@@ -3,8 +3,8 @@ import { LayoutProfile } from "../../components/layout";
 import { AuthContext } from '../../context/auth/AuthContext';
 
 export const ProfilePage = () => {
-  const {user}=useContext(AuthContext);
-  const {nombre,img,rol}=user;
+  const { user } = useContext(AuthContext);
+  const { name: nombre, image, role } = user;
   const handlePrint = () => {
     window.print();
   };
@@ -14,14 +14,14 @@ export const ProfilePage = () => {
         <div className="flex justify-center">
           <div className="w-64 h-60 bg-blue-900 rounded-lg flex flex-col items-center p-4 print:hidden">
             <img
-              src={user.img.length!==0?user.img:"https://aztecsolar.com/wp-content/uploads/2020/05/placeholder-user.jpg"}
+              src={user.image.length !== 0 ? user.image : "https://aztecsolar.com/wp-content/uploads/2020/05/placeholder-user.jpg"}
               alt="avatar"
               className="rounded-full h-28 w-28 mb-2 object-cover"
               style={{ border: "4px solid #fff" }}
             />
             <h1 className="text-xl font-semibold text-white">{nombre}</h1>
             <h2 className="text-base font-semibold text-green-500">
-              {user.rol==='BODEGUERO_ROLE'?'Bodeguero':user.rol==='ADMIN_ROLE'?'Admin':'Cliente'}
+              {user.role.name === 'BODEGUERO_ROLE' ? 'Bodeguero' : user.role.name === 'ADMIN_ROLE' ? 'Admin' : 'Cliente'}
             </h2>
           </div>
         </div>

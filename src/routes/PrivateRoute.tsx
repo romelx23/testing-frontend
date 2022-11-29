@@ -3,17 +3,17 @@ import React, { FC, ReactElement, useContext } from "react";
 import { Navigate } from "react-router";
 import { AuthContext } from "../context/auth";
 
-interface Props{
+interface Props {
     children: ReactElement<any, any> | null;
 }
 
 
-export const PrivateRoute:FC<Props> = ({children}) => {
+export const PrivateRoute: FC<Props> = ({ children }) => {
     // const uid=localStorage.getItem('uid');
     // const {uid} = useSelector(state=>state.auth);
     // console.log(uid);
-    const {user:{uid}} = useContext(AuthContext);
-    return uid
-    ? children
-    :<Navigate to="/auth/login"/>
+    const { user: { uuid } } = useContext(AuthContext);
+    return uuid
+        ? children
+        : <Navigate to="/auth/login" />
 };

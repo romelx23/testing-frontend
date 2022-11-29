@@ -3,37 +3,44 @@ export interface LoginI{
     token:string;
 }
 export interface UserBody{
-    correo:string,
+    email:string,
     msg:string,
     token:string,
-    usuario:User
+    user:User
 }
 export interface User {
-    correo: string;
-    nombre: string;
+    email: string;
+    name: string;
     estado: boolean;
-    img: string;
-    rol: string;
-    uid: string;
+    image: string;
+    role: Role;
+    uuid: string;
     telefono: string;
     direccion: string;
     latitud: string;
     longitud: string;
 }
 
+export interface Role{
+    description:string;
+    name:string;
+    status:boolean;
+    _id:string
+}
+
 // 
 export interface UsuariosResponse {
-    usuario: Usuario[];
+    users: Usuario[];
     total:   number;
 }
 
 export interface Usuario {
-    rol:      string;
+    role:      Role;
     estado:   boolean;
     google:   boolean;
     telefono: number;
-    nombre:   string;
-    correo:   string;
-    img:      string;
-    uid:      string;
+    name:   string;
+    email:   string;
+    image:      string;
+    uuid:      string;
 }

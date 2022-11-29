@@ -10,10 +10,10 @@ type Estado = "ordenado" | "pendiente" | "atendido" | "cancelado";
 
 export interface Order {
     _id:     string;
-    nombre:  string;
+    name:  string;
     importe: number;
     fecha:   string;
-    usuario: string;
+    user: string;
     status:  Estado;
     bodega:  Market;
 }
@@ -53,12 +53,12 @@ export interface PedidoByIdResponse {
 //     disponible:  boolean | null;
 //     stock:       number;
 //     _id:         string;
-//     nombre:      string;
+//     name:      string;
 //     descripcion: string;
 //     img:         string;
 //     categoria:   string;
 //     idProducto:  string;
-//     usuario:     string;
+//     user:     string;
 //     __v:         number;
 //     telefono?:   number;
 // }

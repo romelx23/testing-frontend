@@ -75,11 +75,11 @@ const routesName = [
 ];
 export const NavAdmin = () => {
   const { user, logOut } = useContext(AuthContext);
-  const {clearCart}=useContext(CartContext);
+  const { clearCart } = useContext(CartContext);
   const [toggle, setToggle] = useState(false);
   const { pathname } = useLocation();
   const [title, setTitle] = useState("");
-  const LogOut=()=>{
+  const LogOut = () => {
     logOut();
     clearCart();
   }
@@ -104,13 +104,13 @@ export const NavAdmin = () => {
         style={{ minWidth: "48px" }}
       >
         <p className="font-semibold hidden sm:block">
-          {user.correo ? user.correo : "admin@gmail.com"}
+          {user.email ? user.email : "admin@gmail.com"}
         </p>
         <div className="relative">
           <img
             src={
-              user.img.length !== 0
-                ? user.img
+              user.image.length !== 0
+                ? user.image
                 : "https://aztecsolar.com/wp-content/uploads/2020/05/placeholder-user.jpg"
             }
             alt="avatar"
@@ -121,7 +121,7 @@ export const NavAdmin = () => {
           {toggle && (
             <div className="menu-admin">
               <Link
-                to={`/user/profile/edit/${user.uid}`}
+                to={`/user/profile/edit/${user.uuid}`}
                 className="btn-admin"
               >
                 Actualizar Perfil

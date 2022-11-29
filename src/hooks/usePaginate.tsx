@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export function usePaginate<T extends {nombre:string}>(elements: T[]) {
+export function usePaginate<T extends { name: string }>(elements: T[]) {
   const [items, setItems] = useState<T[]>([]);
   const [numberPage, setNumberPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(0);
@@ -12,14 +12,14 @@ export function usePaginate<T extends {nombre:string}>(elements: T[]) {
       return elements.slice(currentPage, currentPage + 6);
     }
     const filtered = elements.filter((item) =>
-      item.nombre.toLowerCase().includes(search.toLowerCase())
+      item.name.toLowerCase().includes(search.toLowerCase())
     );
     return filtered.slice(currentPage, currentPage + 6);
   };
   const nextPage = () => {
     if (
       elements.filter((item) =>
-        item.nombre.toLowerCase().includes(search.toLowerCase())
+        item.name.toLowerCase().includes(search.toLowerCase())
       ).length >
       currentPage + 6
     ) {
@@ -41,12 +41,12 @@ export function usePaginate<T extends {nombre:string}>(elements: T[]) {
   };
 
   const handlePage = () => {
-    const page=Math.ceil(elements.length/6);
+    const page = Math.ceil(elements.length / 6);
     setQuantity(page);
   }
 
-  const handleSearchPage = (page:number) => {
-    setCurrentPage(page*6);
+  const handleSearchPage = (page: number) => {
+    setCurrentPage(page * 6);
   }
 
   useEffect(() => {

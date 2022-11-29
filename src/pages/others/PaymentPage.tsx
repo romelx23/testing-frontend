@@ -7,20 +7,20 @@ import { useCart, usePaginate } from "../../hooks";
 import { ProductoCarrito } from "../../interfaces";
 
 export const PaymentPage = () => {
-  const {cart,removeFromCart,handleRemove,handleMore,handleOrder,handleCancel,total}=useCart();
+  const { cart, removeFromCart, handleRemove, handleMore, handleOrder, handleCancel, total } = useCart();
   const { currentPage, items, nextPage, prevPage, numberPage, numberLastPage } =
     usePaginate(cart);
-    const navigate=useNavigate();
+  const navigate = useNavigate();
   const handlePrint = () => {
     // imprime el contenido del div
     window.print();
   };
-  
+
   useEffect(() => {
     console.log(cart);
   }, []);
 
-  const handleAddItem=(producto:ProductoCarrito)=>{
+  const handleAddItem = (producto: ProductoCarrito) => {
     Swal.fire({
       title: "Ya esta en el carrito",
       text: "Si Desea agregar mas productos a su carrito, vaya al producto actual",
@@ -85,7 +85,7 @@ export const PaymentPage = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-no-wrap text-left">
                       <div className=" leading-5 text-white">
-                        {producto.nombre}
+                        {producto.name}
                       </div>
                     </td>
                     <td
@@ -106,11 +106,11 @@ export const PaymentPage = () => {
                    text-white leading-5"
                     >
                       <Link to={`/home/${producto._id}`}>
-                      <img
-                        src={producto.img}
-                        alt={producto.nombre}
-                        className="w-12 h-12 object-cover"
-                      />
+                        <img
+                          src={producto.img}
+                          alt={producto.name}
+                          className="w-12 h-12 object-cover"
+                        />
                       </Link>
                     </td>
                     <td className="leading-5 text-white w-10">

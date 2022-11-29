@@ -8,6 +8,7 @@ import { AuthProvider } from "./context/auth";
 import { ProductProvider } from "./context/product";
 import { PlacesProvider } from "./context/places";
 import { MapProvider } from "./context/map";
+import { ProviderProvider } from "./context/provider";
 // import { SocketProvider } from "./context/socket";
 
 function App() {
@@ -21,9 +22,11 @@ function App() {
               <MapProvider>
                 <CartProvider>
                   <ProductProvider>
-                    {/* <SocketProvider> */}
+                    <ProviderProvider>
+                      {/* <SocketProvider> */}
                       <AppRouter />
-                    {/* </SocketProvider> */}
+                      {/* </SocketProvider> */}
+                    </ProviderProvider>
                   </ProductProvider>
                 </CartProvider>
               </MapProvider>

@@ -37,14 +37,14 @@ export const UpadateProfilePage = () => {
   const updateProfile = async () => {
     try {
       const resp = await fetchSintoken(
-        `api/usuarios/${user.uid}`,
+        `api/users/${user.uuid}`,
         {
           nombre: values.name,
           telefono: values.cellphone,
           direccion: values.address,
           img: values.img,
-          rol: user.rol,
-          correo: user.correo,
+          rol: user.role,
+          email: user.email,
         },
         "PUT"
       );
@@ -60,10 +60,10 @@ export const UpadateProfilePage = () => {
       });
       updateUser({
         ...user,
-        nombre: values.name,
+        name: values.name,
         telefono: values.cellphone,
         direccion: values.address,
-        img: values.img,
+        image: values.img,
         latitud: values.lat,
         longitud: values.lng,
       });
@@ -98,10 +98,10 @@ export const UpadateProfilePage = () => {
   useEffect(() => {
     console.log(user);
     setValues({
-      name: user.nombre,
+      name: user.name,
       cellphone: user.telefono,
       address: user.direccion || "",
-      img: user.img,
+      img: user.image || "",
       lat: `${MyLocation[0]}`,
       lng: `${MyLocation[1]}`,
     });

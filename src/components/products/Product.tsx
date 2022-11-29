@@ -12,15 +12,14 @@ interface Props {
 }
 
 export const Product: FC<Props> = ({ product }) => {
-  const { nombre, precio, descripcion, img, _id, bodega, stock } = product;
-  const { addFavorite, favorites} = useContext(FavoriteContext);
-  const { addToCart,cart } = useContext(CartContext);
+  const { name: nombre, price: precio, description: descripcion, img, _id, bodega, stock } = product;
+  const { addFavorite, favorites } = useContext(FavoriteContext);
+  const { addToCart, cart } = useContext(CartContext);
   const [favorite, setFavorite] = useState(false);
   const { user } = useContext(AuthContext);
   const { pathname } = useLocation();
-  const path = `/${pathname.split("/")[1]}/${pathname.split("/")[2]}/${
-    pathname.split("/")[3]
-  }`;
+  const path = `/${pathname.split("/")[1]}/${pathname.split("/")[2]}/${pathname.split("/")[3]
+    }`;
   // console.log(path);
   const toggleFavorite = () => {
     // si esta incluido en los favoritos pintar el icono de favorito
@@ -37,7 +36,7 @@ export const Product: FC<Props> = ({ product }) => {
 
   const handleAddTocart = () => {
     // validar que las bodegas sean iguales
-    const bodegas = cart.filter((item) => item.bodega.nombre!==bodega.nombre);
+    const bodegas = cart.filter((item) => item.bodega.nombre !== bodega.nombre);
     // console.log(bodegas);
     if (bodegas.length > 0) {
       return Swal.fire({
@@ -82,12 +81,12 @@ export const Product: FC<Props> = ({ product }) => {
   return (
     <div className="btn-product relative" title={nombre}>
       {user.rol == "BODEGUERO_ROLE" &&
-      path === "/gestion/pedidos/actualizar" ? (
+        path === "/gestion/pedidos/actualizar" ? (
         <input
           type="checkbox"
           className="checkbox"
           id={_id}
-          onChange={() => {}}
+          onChange={() => { }}
         />
       ) : (
         <button onClick={toggleFavorite} className="btn-favorite">
@@ -104,12 +103,11 @@ export const Product: FC<Props> = ({ product }) => {
       <label htmlFor={_id} className="btn-select-label">
         <Link
           to={`/home/${_id}`}
-          className={`card__product w-[260px] ${
-            user.rol == "BODEGUERO_ROLE" &&
+          className={`card__product w-[260px] ${user.rol == "BODEGUERO_ROLE" &&
             path === "/gestion/pedidos/actualizar"
-              ? "sm:w-[260px] pointer-events-none"
-              : "sm:w-[332px]"
-          } p-5 py-8`}
+            ? "sm:w-[260px] pointer-events-none"
+            : "sm:w-[332px]"
+            } p-5 py-8`}
         >
           <img
             src={

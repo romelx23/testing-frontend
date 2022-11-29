@@ -53,12 +53,12 @@ export const useCart = () => {
     }
   };
   const generateOrder = async () => {
-    console.log(user.nombre,total,cart);
+    console.log(user.name,total,cart);
     // actualiza el estado del pedido a ordenado
     const resp = await fetchContoken(
       `api/pedido`,
       {
-        nombre: user.nombre,
+        nombre: user.name,
         importe: total,
         fecha: new Date(),
         productos: cart,

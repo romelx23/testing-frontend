@@ -1,11 +1,12 @@
 export interface MarcaGeneralI {
-    marcas: MarcaI[];
+    brands: MarcaI[];
     total:      number;
 }
 
 export interface MarcaI {
     _id:     string;
-    nombre:  string;
+    name:  string;
+    description: string;
     usuario: UsuarioBrand;
 }
 

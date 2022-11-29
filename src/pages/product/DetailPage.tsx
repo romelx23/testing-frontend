@@ -35,7 +35,7 @@ const initMarket: Market = {
 export const DetailPage = () => {
   const { id } = useParams();
   const [producto, setProducto] = useState<Producto>({} as Producto);
-  const { addToCart,cart } = useContext(CartContext);
+  const { addToCart, cart } = useContext(CartContext);
   const { increment, decrement, updateStock } = useStock();
   const currentProduct = cart.find((item) => item._id === id);
   const [cantidad, setCantidad] = useState(currentProduct?.cantidad || 1);
@@ -55,16 +55,16 @@ export const DetailPage = () => {
   const addToCartHandler = (producto: Producto) => {
     // validar si el producto ya esta en el carrito
     if (currentProduct) {
-     return Swal.fire({
+      return Swal.fire({
         title: "Ya esta en el carrito",
         text: "Si Desea agregar mas productos a su carrito, retire el producto actual",
         icon: "warning",
         confirmButtonText: "Ok",
-     });
+      });
     }
 
     // validar que las bodegas sean iguales
-    const bodegas = cart.filter((item) => item.bodega.nombre!==market.nombre);
+    const bodegas = cart.filter((item) => item.bodega.nombre !== market.nombre);
     // console.log(bodegas);
     if (bodegas.length > 0) {
       return Swal.fire({
@@ -91,10 +91,10 @@ export const DetailPage = () => {
 
   const getProductId = async () => {
     try {
-      const product = `${baseUrl}/api/productos/${id}`;
+      const product = `${baseUrl}/api/products/${id}`;
       const resp = await fetch(product);
       const { producto, bodega }: ProductoId = await resp.json();
-      if (producto.nombre) setProducto(producto);
+      if (producto.name) setProducto(producto);
       console.log(producto);
       if (bodega.nombre) setMarket(bodega);
       return producto;
@@ -156,21 +156,21 @@ export const DetailPage = () => {
         </div>
         {market.nombre ? (
           <div className="flex-1 flex flex-col items-start px-3 text-left">
-            <h1 className="font-semibold text-xl">{producto.nombre}</h1>
+            <h1 className="font-semibold text-xl">{producto.name}</h1>
             <p>
-              {producto.descripcion
-                ? producto.descripcion
+              {producto.description
+                ? producto.description
                 : "no hay descripcion"}
             </p>
             {/* <h2>raiting</h2> */}
             <Star start={4.5} />
             <div className="my-2 py-1 px-2 bg-[#3f52e8] text-white rounded-lg">
-              {producto.categoria
-                ? producto.categoria.nombre
+              {producto.category
+                ? producto.category.name
                 : "no hay categoria"}
             </div>
             <h2 className="text-red-700 font-bold text-xl">
-              {formatPrice(producto.precio)}
+              {formatPrice(producto.price)}
             </h2>
             <div className="w-full flex flex-wrap gap-2 my-2">
               <button
@@ -239,7 +239,7 @@ export const DetailPage = () => {
           </div>
         ) : (
           <div className="flex-1 flex flex-col items-start px-3 text-left">
-          <Loader message="Cargando Producto" width="w-full"/>
+            <Loader message="Cargando Producto" width="w-full" />
           </div>
         )}
       </div>
@@ -259,7 +259,7 @@ export const DetailPage = () => {
             placeholder="bodega"
             loading="lazy"
             className="object-cover h-12 cursor-pointer"
-            // onClick={() => navigate(`${market?'/bodega/'+ market._id:'/'}`)}
+          // onClick={() => navigate(`${market?'/bodega/'+ market._id:'/'}`)}
           />
         </Link>
       </div>

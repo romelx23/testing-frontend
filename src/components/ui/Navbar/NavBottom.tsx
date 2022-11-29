@@ -20,38 +20,38 @@ export const NavBottom = () => {
 
   return (
     <>
-    <div className="flex gap-3 relative flex-wrap sm:flex-nowrap">
-      <NavLink
-      title="Buscar Productos"
-        to="/home/categorias"
-        className="link-category text-sm md:text-base w-full text-center sm:w-72 sm:h-10"
-      >
-        Buscar Productos
-      </NavLink>
-      <div className="w-full h-9 md:h-auto">
-        <div className="navbottom-cateogries w-full sm:w-auto">
-          <button
-            onClick={() => {
-              toggleModal(true);
-            }}
-            className="p-2 md:hidden mb-1 text-sm md:text-base w-full"
-          >
-            Categorías
-          </button>
-          {categories.map((category) => (
-            <NavLink
-              key={category._id}
-              title={category.nombre}
-              to={`/home/categoria/${category.nombre.toLocaleLowerCase()}`}
-              className="link-category"
+      <div className="flex gap-3 relative flex-wrap sm:flex-nowrap">
+        <NavLink
+          title="Buscar Productos"
+          to="/home/categorias"
+          className="link-category text-sm md:text-base w-full text-center sm:w-72 sm:h-10"
+        >
+          Buscar Productos
+        </NavLink>
+        <div className="w-full h-9 md:h-auto">
+          <div className="navbottom-cateogries w-full sm:w-auto">
+            <button
               onClick={() => {
-                toggleModal(false);
+                toggleModal(true);
               }}
+              className="p-2 md:hidden mb-1 text-sm md:text-base w-full"
             >
-              {category.nombre}
-            </NavLink>
-          ))}
-          {/* <Link
+              Categorías
+            </button>
+            {categories.map((category) => (
+              <NavLink
+                key={category._id}
+                title={category.name}
+                to={`/home/categoria/${category.name.toLocaleLowerCase()}`}
+                className="link-category"
+                onClick={() => {
+                  toggleModal(false);
+                }}
+              >
+                {category.name}
+              </NavLink>
+            ))}
+            {/* <Link
             to="/home/categoria/diario"
             className="link-category"
             style={{ color: "#000", textDecoration: "none" }}
@@ -59,25 +59,25 @@ export const NavBottom = () => {
             Alimentos del Día
           </Link>
           */}
+          </div>
         </div>
       </div>
-    </div>
-    <div className="md:hidden">
-    <Modal>
-      <div className="flex flex-col h-64 overflow-y-auto w-60">
-        {categories.map((category) => (
-          <NavLink
-            key={category._id}
-            title={category.nombre}
-            to={`/home/categoria/${category.nombre.toLocaleLowerCase()}`}
-            className="link-category"
-          >
-            {category.nombre}
-          </NavLink>
-        ))}
+      <div className="md:hidden">
+        <Modal>
+          <div className="flex flex-col h-64 overflow-y-auto w-60">
+            {categories.map((category) => (
+              <NavLink
+                key={category._id}
+                title={category.name}
+                to={`/home/categoria/${category.name.toLocaleLowerCase()}`}
+                className="link-category"
+              >
+                {category.name}
+              </NavLink>
+            ))}
+          </div>
+        </Modal>
       </div>
-    </Modal>
-    </div>
     </>
   );
 };

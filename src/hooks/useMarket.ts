@@ -6,9 +6,9 @@ export const useMarket = () => {
   const { user } = useContext(AuthContext);
   const [id, setId] = useState("");
   const handleExistMarket = async () => {
-    const { uid } = user;
+    const { uuid } = user;
     const resp = await fetchContoken(
-      `api/usuarios/datosBodega/${uid}`,
+      `api/users/datosBodega/${uuid}`,
       {},
       "POST"
     );

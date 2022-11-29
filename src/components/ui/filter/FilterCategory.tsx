@@ -35,13 +35,13 @@ export const FilterCategory = () => {
   };
 
   const handleFilter = () => {
-    if(!itemRef.current){
+    if (!itemRef.current) {
       return;
     }
     const containerItems = itemRef.current;
     if (search.length > 0) {
       const filtered = categories.filter((item) =>
-        item.nombre.toLowerCase().includes(search.toLowerCase())
+        item.name.toLowerCase().includes(search.toLowerCase())
       );
       // setCategorias(filtered);
       const categorySelected = containerItems.querySelectorAll(
@@ -53,7 +53,7 @@ export const FilterCategory = () => {
       });
       filtered.forEach((item) => {
         const category = containerItems.querySelector(
-          `.category-item[data-category="${item.nombre}"]`
+          `.category-item[data-category="${item.name}"]`
         );
         category?.classList.add("active");
       });
@@ -76,8 +76,8 @@ export const FilterCategory = () => {
   // }
 
   useEffect(() => {
-  handleFilter();
-  // console.log('filter');
+    handleFilter();
+    // console.log('filter');
   }, [search]);
 
   useEffect(() => {
@@ -100,15 +100,15 @@ export const FilterCategory = () => {
       </div>
       <div className="select-content" ref={itemRef}>
         {categorias.map((category) => (
-          <div key={category._id} className="flex px-4 category-item" data-category={category.nombre}>
+          <div key={category._id} className="flex px-4 category-item" data-category={category.name}>
             <label className="space-x-2 hover:cursor-pointer">
               <input
                 type="checkbox"
                 name="category"
-                value={category.nombre}
-                onChange={() => handleSelect(category.nombre)}
+                value={category.name}
+                onChange={() => handleSelect(category.name)}
               />
-              <span>{category.nombre}</span>
+              <span>{category.name}</span>
             </label>
           </div>
         ))}

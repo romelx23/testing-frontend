@@ -4,13 +4,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../context/auth";
 import { ProductContext } from "../../context/product";
-import { getCategories, ProductSchema } from "../../helpers";
+import { ProductSchema } from "../../helpers";
 import { fetchContoken } from "../../helpers/fetch";
 import { fileUpload } from "../../helpers/fileUpload";
 import { useCategories, useUpload } from "../../hooks";
 import { useBrands } from "../../hooks/useBrands";
 import { ProductoResponseError } from "../../interfaces";
-import { CategoriaI } from "../../interfaces/category";
 import { Producto } from "../../interfaces/product";
 import { Spinner } from "../ui";
 
@@ -34,7 +33,7 @@ export const FormProducts: FC<Props> = ({ producto }) => {
   const { user } = useContext(AuthContext);
   const { brands } = useBrands();
   const [url, setUrl] = useState("");
-  const {pathname}=useLocation();
+  const { pathname } = useLocation();
   const { startUploading, product } = useContext(ProductContext);
   const navigate = useNavigate();
   const {
@@ -57,33 +56,15 @@ export const FormProducts: FC<Props> = ({ producto }) => {
     },
     validate: (values: FormValues) => {
       let errors: FormikErrors<FormValues> = {};
-      // if (!values.name) {
-      //   errors.name = "El nombre es requerido";
-      // }
-      // if (!values.price) {
-      //   errors.price = "El precio es requerida";
-      // }
       if (parseInt(values.price) <= 0) {
         errors.price = "El precio debe ser mayor a 0";
       }
-      // if (!values.stock) {
-      //   errors.stock = "La cantidad es requerida";
-      // }
-      // if (!values.description) {
-      //   errors.description = "La descripción es requerida";
-      // }
-      // if (!values.category) {
-      //   errors.category = "La categoría es requerida";
-      // }
-      // if (!values.marca) {
-      //   errors.marca = "La marca es requerida";
-      // }
 
       return errors;
     },
     validationSchema: ProductSchema,
     onSubmit: () => {
-      if (producto?.nombre) {
+      if (producto?.name) {
         handleUpdate();
       } else {
         handleCreate();
@@ -96,26 +77,25 @@ export const FormProducts: FC<Props> = ({ producto }) => {
     console.log(values, "values");
     if (Object.keys(errors).length === 0) {
       const resp = await fetchContoken(
-        "api/productos",
+        "api/products",
         {
-          nombre: values.name,
-          precio: values.price,
-          descripcion: values.description,
+          name: values.name,
+          price: values.price,
+          description: values.description,
           img: url,
-          categoria: values.category,
-          idProducto: 1,
-          stock: values.stock,
-          activo: true,
-          marca: values.marca,
+          category: values.category,
+          stock: parseInt(values.stock),
+          user: user.uuid,
+          brand: values.marca,
         },
         "POST"
       );
       const data: ProductoResponseError = await resp!.json();
       console.log(data, "data upload");
-      if (user.rol === "BODEGUERO_ROLE") {
+      if (user.role.name === "BODEGUERO_ROLE") {
         navigate("/gestion/productos");
       }
-      if (user.rol === "ADMIN_ROLE") {
+      if (user.role.name === "ADMIN_ROLE") {
         navigate("/admin/products");
       }
     }
@@ -142,26 +122,24 @@ export const FormProducts: FC<Props> = ({ producto }) => {
     console.log(errors, "errors");
     if (Object.keys(errors).length === 0) {
       const resp = await fetchContoken(
-        `api/productos/${producto!._id}`,
+        `api/products/${producto!._id}`,
         {
-          nombre: values.name,
-          precio: values.price,
-          descripcion: values.description,
+          name: values.name,
+          price: values.price,
+          description: values.description,
           img: url,
-          categoria: values.category,
-          idProducto: 1,
+          category: values.category,
           stock: values.stock,
-          marca: values.marca,
-          activo: true,
+          brand: values.marca
         },
         "PUT"
       );
       const data: ProductoResponseError = await resp!.json();
       console.log(data, "data upload");
-      if (user.rol === "BODEGUERO_ROLE") {
+      if (user.role.name === "BODEGUERO_ROLE") {
         navigate("/gestion/productos");
       }
-      if (user.rol === "ADMIN_ROLE") {
+      if (user.role.name === "ADMIN_ROLE") {
         navigate("/admin/products");
       }
     }
@@ -184,50 +162,42 @@ export const FormProducts: FC<Props> = ({ producto }) => {
     });
   };
 
-  // const handleCategory = async () => {
-  //   const category = await getCategories();
-  //   setCategory(category.categorias);
-  // };
-
   const handleImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files![0];
     console.log(e.target.files);
     if (file) {
       // console.log('file',file);
       const resp: string = await fileUpload(file);
-      // console.log(resp, "resp");
-      // startUploading(file);
       console.log(resp);
       setUrl(resp);
     }
   };
 
   useEffect(() => {
-    if (producto?.nombre) {
+    if (producto?.name) {
       setValues({
-        name: producto?.nombre ? producto.nombre : "",
-        price: producto?.precio ? `${producto?.precio}` : "",
-        description: producto?.descripcion ? producto?.descripcion : "",
-        category: producto?.categoria.nombre ? producto?.categoria._id : "",
+        name: producto?.name ? producto.name : "",
+        price: producto?.price ? `${producto?.price}` : "",
+        description: producto?.description ? producto?.description : "",
+        category: producto?.category.name ? producto?.category._id : "",
         image: producto?.img ? producto?.img : "",
         stock: producto?.stock ? `${producto?.stock}` : "0",
-        marca: producto?.marca ? producto?.marca._id : "",
+        marca: producto?.brand ? producto?.brand._id : "",
       });
       setUrl(producto?.img ? producto?.img : "");
     }
-    console.log(producto, "producto");
-    // handleCategory();
+    console.log(producto, "producto 189");
   }, [producto]);
 
   return (
     <>
-      {producto?.nombre || pathname ==='/gestion/producto/agregar' ? (
+      {producto?.name || pathname === '/gestion/producto/agregar' ? (
         <form
           onSubmit={handleSubmit}
           className="w-full min-h-[85vh] grid grid-cols-1 md:grid-cols-2"
         >
           <div className="px-4">
-            {producto?.nombre ? (
+            {producto?.name ? (
               <h1 className="text-left font-semibold">Editar Producto</h1>
             ) : (
               <h1 className="text-left font-semibold">Agregar Producto</h1>
@@ -318,7 +288,7 @@ export const FormProducts: FC<Props> = ({ producto }) => {
                 {categories.map((item) => {
                   return (
                     <option key={item._id} value={item._id}>
-                      {item.nombre}
+                      {item.name}
                     </option>
                   );
                 })}
@@ -344,7 +314,7 @@ export const FormProducts: FC<Props> = ({ producto }) => {
                 {brands.map((item) => {
                   return (
                     <option key={item._id} value={item._id}>
-                      {item.nombre}
+                      {item.name}
                     </option>
                   );
                 })}
@@ -355,7 +325,7 @@ export const FormProducts: FC<Props> = ({ producto }) => {
                 </p>
               )}
             </div>
-            {producto?.nombre ? (
+            {producto?.name ? (
               <button
                 type="submit"
                 className="w-full btn my-2 bg-purple-500 text-white hover:bg-purple-700"
@@ -395,10 +365,10 @@ export const FormProducts: FC<Props> = ({ producto }) => {
           </div>
         </form>
       ) : (
-            <div className="flex flex-col justify-center items-center opacity-60 min-h-[50vh]">
-              <h1 className="font-extralight">Cargando los datos</h1>
-              <Spinner />
-            </div>
+        <div className="flex flex-col justify-center items-center opacity-60 min-h-[50vh]">
+          <h1 className="font-extralight">Cargando los datos</h1>
+          <Spinner />
+        </div>
       )}
     </>
   );

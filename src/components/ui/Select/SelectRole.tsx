@@ -22,15 +22,15 @@ export const SelectRole: FC<Props> = ({ usuario, handleUsers }) => {
   };
 
   const updateRole = async (user: Usuario, rol: string) => {
-    if(select === ""){
-      return ;
+    if (select === "") {
+      return;
     }
-    const { uid, nombre, correo } = user;
+    const { uuid, name, email } = user;
     const resp = await fetchSintoken(
-      `api/usuarios/${uid}`,
+      `api/usuarios/${uuid}`,
       {
-        nombre,
-        correo,
+        name,
+        correo: email,
         rol,
       },
       "PUT"
@@ -40,7 +40,7 @@ export const SelectRole: FC<Props> = ({ usuario, handleUsers }) => {
     handleUsers();
   };
 
-  const handleUpdate=()=>{
+  const handleUpdate = () => {
     if (select === "") {
       return;
     }
@@ -56,7 +56,7 @@ export const SelectRole: FC<Props> = ({ usuario, handleUsers }) => {
         updateRole(usuario, select);
       }
       setSelect("");
-    }).catch(error=>{
+    }).catch(error => {
       console.log(error);
     })
   }
@@ -82,8 +82,8 @@ export const SelectRole: FC<Props> = ({ usuario, handleUsers }) => {
     >
       <option value="">Seleccione un rol</option>
       {rol.map((rol, i) => (
-        <option key={rol._id} value={rol.rol}>
-          {rol.rol}
+        <option key={rol._id} value={rol.name}>
+          {rol.name}
         </option>
       ))}
     </select>

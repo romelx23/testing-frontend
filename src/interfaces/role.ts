@@ -3,7 +3,8 @@ export interface RoleResponse {
 }
 
 export interface Role {
-    estado: boolean;
-    _id:    string;
-    rol:    string;
+    description:string;
+    name:string;
+    status:boolean;
+    _id:string
 }

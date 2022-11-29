@@ -5,7 +5,7 @@ export interface CategoriaGeneralI {
 
 export interface CategoriaI {
     _id:     string;
-    nombre:  string;
+    name:  string;
     usuario: UsuarioCategoria;
 }
 

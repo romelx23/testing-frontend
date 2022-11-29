@@ -105,25 +105,25 @@ export const ModalOrderMarket: FC<Props> = ({
                 <hr />
               </div>
               {orderDetail.bodega.nombre?.length > 0 ? (
-              <>
-              <p className="text-left ml-6">
-                <span className="font-semibold">Cliente:</span>{" "}
-                {orderDetail.nombre}
-              </p>
-              <p className="text-left ml-6">
-                <span className="font-semibold">Total:</span>{" "}
-                {orderDetail.importe.toFixed(2)}
-              </p>
-              <p className="text-left ml-6">
-                <span className="font-semibold">Fecha:</span>{" "}
-                {new Date(orderDetail.fecha).toLocaleDateString()}
-              </p>
-              <p className="text-left ml-6">
-                <span className="font-semibold">Estado:</span>{" "}
-                {orderDetail.status}
-              </p>
-              </>
-               ) : (
+                <>
+                  <p className="text-left ml-6">
+                    <span className="font-semibold">Cliente:</span>{" "}
+                    {orderDetail.nombre}
+                  </p>
+                  <p className="text-left ml-6">
+                    <span className="font-semibold">Total:</span>{" "}
+                    {orderDetail.importe.toFixed(2)}
+                  </p>
+                  <p className="text-left ml-6">
+                    <span className="font-semibold">Fecha:</span>{" "}
+                    {new Date(orderDetail.fecha).toLocaleDateString()}
+                  </p>
+                  <p className="text-left ml-6">
+                    <span className="font-semibold">Estado:</span>{" "}
+                    {orderDetail.status}
+                  </p>
+                </>
+              ) : (
                 <Loader message="Cargando datos de la bodega" heigth="200px" />
               )}
               <div className="flex flex-col">
@@ -145,7 +145,7 @@ export const ModalOrderMarket: FC<Props> = ({
                             <p className="font-semibold">{i + 1}.-</p>
                           </td>
                           <td>
-                            <p className="text-left">{item.producto.nombre}</p>
+                            <p className="text-left">{item.producto.name}</p>
                           </td>
                           <td>
                             <p>S/.{item.precio.toFixed(2)}</p>
@@ -156,7 +156,7 @@ export const ModalOrderMarket: FC<Props> = ({
                           <td className="flex justify-center items-center">
                             <img
                               className="w-12 h-12 border"
-                              alt={item.producto.nombre}
+                              alt={item.producto.name}
                               src={item.producto.img}
                             />
                           </td>
@@ -174,9 +174,8 @@ export const ModalOrderMarket: FC<Props> = ({
                 <button
                   // onClick={() => setEstado("ordenado")}
                   onClick={() => handleStatus("ordenado", orderDetail)}
-                  className={`estado-circle ${
-                    estado === "ordenado" ? "bg-green-600" : ""
-                  }`}
+                  className={`estado-circle ${estado === "ordenado" ? "bg-green-600" : ""
+                    }`}
                 >
                   <i className="fas fa-shopping-basket"></i>
                   <p className="absolute -bottom-8">Ordenado</p>
@@ -184,9 +183,8 @@ export const ModalOrderMarket: FC<Props> = ({
                 <div className="h-4 w-16 bg-white"></div>
                 <button
                   onClick={() => handleStatus("pendiente", orderDetail)}
-                  className={`estado-circle ${
-                    estado === "pendiente" ? "bg-blue-600" : ""
-                  }`}
+                  className={`estado-circle ${estado === "pendiente" ? "bg-blue-600" : ""
+                    }`}
                 >
                   <i className="fas fa-dolly"></i>
                   <p className="absolute -bottom-8">Pendiente</p>
@@ -194,9 +192,8 @@ export const ModalOrderMarket: FC<Props> = ({
                 <div className="h-4 w-16 bg-white"></div>
                 <button
                   onClick={() => handleStatus("atendido", orderDetail)}
-                  className={`estado-circle ${
-                    estado === "atendido" ? "bg-orange-600" : ""
-                  }`}
+                  className={`estado-circle ${estado === "atendido" ? "bg-orange-600" : ""
+                    }`}
                 >
                   <i className="fas fa-check-circle"></i>
                   <p className="absolute -bottom-8">Atendido</p>
@@ -205,9 +202,8 @@ export const ModalOrderMarket: FC<Props> = ({
               <div className="estado-pedido-container mt-8">
                 <button
                   onClick={() => handleStatus("cancelado", orderDetail)}
-                  className={`estado-circle ${
-                    estado === "cancelado" ? "bg-red-600" : ""
-                  }`}
+                  className={`estado-circle ${estado === "cancelado" ? "bg-red-600" : ""
+                    }`}
                 >
                   <i className="fas fa-times"></i>
                   <p className="absolute -bottom-8">Cancelado</p>

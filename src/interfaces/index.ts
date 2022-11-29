@@ -6,3 +6,4 @@ export * from './order';
 export * from './market';
 export * from './socket';
 export * from './brand';
+export * from './providers';

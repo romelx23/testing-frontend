@@ -27,7 +27,7 @@ export const ListProducts: FC<Props> = ({
     if (productsProps) {
       if (
         productsProps.filter((producto) =>
-          producto.nombre.toLowerCase().includes(search.toLowerCase())
+          producto.name.toLowerCase().includes(search.toLowerCase())
         ).length >
         currentPage + quantityForPage
       ) {
@@ -51,7 +51,7 @@ export const ListProducts: FC<Props> = ({
         return productsProps.slice(currentPage, currentPage + quantityForPage);
       }
       const filtered = productsProps.filter((producto) =>
-        producto.nombre.toLowerCase().includes(search.toLowerCase())
+        producto.name.toLowerCase().includes(search.toLowerCase())
       );
       return filtered.slice(currentPage, currentPage + quantityForPage);
     }
@@ -89,7 +89,7 @@ export const ListProducts: FC<Props> = ({
             {title ? title : "Nuevos Productos"}
           </h1>
         )}
-        <div className={`flex justify-end mb-2 ${topTitle&&'w-full'}`}>
+        <div className={`flex justify-end mb-2 ${topTitle && 'w-full'}`}>
           <input
             className="w-full py-2 px-3 rounded-lg border-2 border-gray-300"
             type="text"
@@ -120,11 +120,11 @@ export const ListProducts: FC<Props> = ({
       <div className="grid-products">
         {productsProps
           ? productos.map((product) => (
-              <Product key={product._id} product={product} />
-            ))
+            <Product key={product._id} product={product} />
+          ))
           : productos.map((product) => (
-              <Product key={product._id} product={product} />
-            ))}
+            <Product key={product._id} product={product} />
+          ))}
         {productos.length > 0 ? (
           <></>
         ) : (
@@ -160,7 +160,7 @@ export const ListProducts: FC<Props> = ({
           </li>
           {/* número de página */}
           <li className="text-center flex items-center px-2">
-            { numberPage } de {Math.ceil(productsProps?productsProps?.length / quantityForPage:0)}
+            {numberPage} de {Math.ceil(productsProps ? productsProps?.length / quantityForPage : 0)}
           </li>
           <li className="btn-next" onClick={nextPage}>
             Adelante

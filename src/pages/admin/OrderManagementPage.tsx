@@ -20,26 +20,17 @@ export const OrderManagementPage = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [filterOrders, setFilterOrders] = useState<Order[]>([]);
   const { toggleModal } = useContext(UIContext);
-  const {deleteOrder}=useOrderDetail();
+  const { deleteOrder } = useOrderDetail();
   // const [detail, setDetail] = useState<DetallePedido[]>([]);
   const [mode, setMode] = useState("tabla");
-  const { currentPage, nextPage, prevPage,numberPage,numberLastPage } = usePaginate(filterOrders);
-  const {detail,getOrderDetails,orderDetail}=useOrderDetail();
-  // const [orderDetail, setOrderDetail] = useState({
-  //   _id: "",
-  //   bodega: {},
-  //   fecha: "",
-  //   importe: 0,
-  //   nombre: "",
-  //   usuario: "",
-  //   status: "ordenado",
-  // } as Order);
+  const { currentPage, nextPage, prevPage, numberPage, numberLastPage } = usePaginate(filterOrders);
+  const { detail, getOrderDetails, orderDetail } = useOrderDetail();
 
   const loadOrders = async () => {
     // validar si el usuario tiene bodega
-    const { uid } = user;
+    const { uuid } = user;
     const resp = await fetchContoken(
-      `api/usuarios/datosBodega/${uid}`,
+      `api/users/datosBodega/${uuid}`,
       {},
       "POST"
     );
@@ -74,7 +65,7 @@ export const OrderManagementPage = () => {
   // abrir un modal para mostrar el detalle de la orden
   const handleDetail = (order: Order) => {
     toggleModal(true);
-    const {_id}=order;
+    const { _id } = order;
     getOrderDetails(_id);
   };
 
@@ -98,8 +89,8 @@ export const OrderManagementPage = () => {
     }
   };
 
-  const handleDelete = async (id:string) => {
-    console.log('id',id);
+  const handleDelete = async (id: string) => {
+    console.log('id', id);
     Swal.fire({
       title: "¿Estás seguro?",
       text: "No podrás revertir esto",
@@ -114,7 +105,7 @@ export const OrderManagementPage = () => {
         Swal.fire("Eliminado", "La orden ha sido eliminada", "success");
         deleteOrder(id);
       }
-    }).catch(e=>{
+    }).catch(e => {
       console.log(e);
     })
     // const resp = await fetchContoken(`api/pedido/${id}`, {}, "DELETE");
@@ -155,9 +146,8 @@ export const OrderManagementPage = () => {
         </select>
         <button
           title="cuadricula"
-          className={`btn_model h-10 ${
-            mode === "cuadricula" && "btn_model_selected"
-          }`}
+          className={`btn_model h-10 ${mode === "cuadricula" && "btn_model_selected"
+            }`}
           onClick={() => handleMode("cuadricula")}
         >
           <svg
@@ -177,9 +167,8 @@ export const OrderManagementPage = () => {
         </button>
         <button
           title="tabla"
-          className={`btn_model h-10 ${
-            mode === "tabla" && "btn_model_selected"
-          }`}
+          className={`btn_model h-10 ${mode === "tabla" && "btn_model_selected"
+            }`}
           onClick={() => handleMode("tabla")}
         >
           <svg
@@ -210,7 +199,7 @@ export const OrderManagementPage = () => {
                   >
                     <div className="flex justify-between">
                       <h1>{i}.</h1>
-                      <h1>{item.nombre}</h1>
+                      <h1>{item.name}</h1>
                     </div>
                     <h1 className="flex justify-center font-semibold">
                       S/.{item.importe.toFixed(2)}
@@ -279,7 +268,7 @@ export const OrderManagementPage = () => {
                             </td>
                             <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                               <div className=" leading-5 text-white text-left">
-                                {item.nombre}
+                                {item.name}
                               </div>
                             </td>
                             <td className="px-6 py-4 whitespace-no-wrap border-b text-white border-gray-500  leading-5">
@@ -378,9 +367,9 @@ export const OrderManagementPage = () => {
                 </div>
               ) : (
                 <div className="flex flex-col justify-center items-center opacity-60 min-h-[50vh]">
-                <h1 className="font-extralight">Cargando Pedidos</h1>
-                <Spinner/>
-              </div>
+                  <h1 className="font-extralight">Cargando Pedidos</h1>
+                  <Spinner />
+                </div>
               )}
             </>
           )}

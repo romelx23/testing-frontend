@@ -9,7 +9,7 @@ export interface ProductContextProps {
 
 export interface ProductState {
   product: ProductForm;
-  category:CategoryForm;
+  category: CategoryForm;
   products: ProductForm[];
   productsFilter: Producto[];
   filters: Filter;
@@ -24,8 +24,8 @@ export const Product_INITIAL_STATE: ProductState = {
     category: "",
     image: "",
   },
-  category:{
-    name:"",
+  category: {
+    name: "",
   },
   products: [],
   productsFilter: [],
@@ -53,13 +53,13 @@ export const ProductProvider: FC<ProductContextProps> = ({ children }) => {
   const startUploading = async (file: File) => {
     const url: string = await fileUpload(file);
     Swal.fire({
-        title:'Uploading...',
-        text:'Please wait',
-        allowOutsideClick:false,
-        showLoaderOnConfirm:true,
-        didOpen:()=>{
-            Swal.showLoading();
-        }
+      title: 'Uploading...',
+      text: 'Please wait',
+      allowOutsideClick: false,
+      showLoaderOnConfirm: true,
+      didOpen: () => {
+        Swal.showLoading();
+      }
     })
     dispatch({
       type: "[Product] - Upload Product Image",
@@ -86,25 +86,25 @@ export const ProductProvider: FC<ProductContextProps> = ({ children }) => {
     const productsFilter = products.filter(
       (product: Producto) =>
         state.filters.categories.length === 0 ||
-        state.filters.categories.includes(product.categoria.nombre)
+        state.filters.categories.includes(product.category.name)
     );
     const productsFilterPrice = productsFilter.filter(
       (product: Producto) =>
         state.filters.prices.min === 0 &&
         state.filters.prices.max === 0 ||
-        product.precio >= state.filters.prices.min &&
-        product.precio <= state.filters.prices.max
+        product.price >= state.filters.prices.min &&
+        product.price <= state.filters.prices.max
     );
     // console.log(productsFilterPrice);
     const productsFilterBrand = productsFilterPrice.filter(
       (product: Producto) =>
         state.filters.brands.length === 0 ||
-        state.filters.brands.includes(product.marca?.nombre)
+        state.filters.brands.includes(product.brand?.name)
     );
     dispatch({
       type: "[Product] - Filter Product",
       payload: {
-        products:productsFilterBrand,
+        products: productsFilterBrand,
       },
     });
   }

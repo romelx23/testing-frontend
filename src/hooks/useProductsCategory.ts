@@ -9,11 +9,11 @@ export const useProductsCategory = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `${baseUrl}/api/productos/categoria/${category.toUpperCase()}`
+        `${baseUrl}/api/products/categories/${category.toUpperCase()}`
       );
-      const { productos }: ProductsI = await response.json();
-      // console.log(productos);
-      setProducts(productos);
+      const { products }: ProductsI = await response.json();
+      console.log(response,'response 15');
+      setProducts(products);
       setLoading(false);
     } catch (error) {
       console.log(error);

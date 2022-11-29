@@ -1,9 +1,7 @@
 import { FormikErrors, useFormik } from "formik";
-import React, { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import Swal from "sweetalert2";
-import { ModalBrand } from "../../components/Admin";
 import { LayoutProfile } from "../../components/layout";
-import { TableComponent } from "../../components/ui/Table/Table";
 import { AuthContext } from "../../context/auth";
 import { fetchContoken } from "../../helpers";
 import { usePaginate } from "../../hooks";
@@ -11,13 +9,12 @@ import { useBrands } from "../../hooks/useBrands";
 import { MarcaI } from "../../interfaces";
 interface FormValues {
   name: string;
+  description: string;
 }
 export const BrandAdminPage = () => {
   const { brands, getBrands } = useBrands();
   const [active, setActive] = useState(false);
   const [select, setSelect] = useState({} as MarcaI);
-  const { user } = useContext(AuthContext);
-  const canActions = user.rol === "ADMIN_ROLE";
   const {
     prevPage,
     nextPage,
@@ -28,7 +25,7 @@ export const BrandAdminPage = () => {
     quantity,
     handleSearchPage,
   } = usePaginate(brands);
-  
+
   const {
     errors,
     values,
@@ -41,6 +38,7 @@ export const BrandAdminPage = () => {
   } = useFormik({
     initialValues: {
       name: "",
+      description: "",
     },
     validate: (values: FormValues) => {
       let errors: FormikErrors<FormValues> = {};
@@ -59,7 +57,7 @@ export const BrandAdminPage = () => {
   });
   const onFormSubmit = () => {
     const marca = brands.filter(
-      (brand) => brand.nombre.toLowerCase() === values.name.toLowerCase()
+      (brand) => brand.name.toLowerCase() === values.name.toLowerCase()
     );
     if (marca.length > 0) {
       Swal.fire({
@@ -72,44 +70,46 @@ export const BrandAdminPage = () => {
     }
     active
       ? Swal.fire({
-          title: "¿Estas seguro?",
-          text: "Esta acción no se puede revertir",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Si, editar Marca",
-        }).then((result) => {
-          if (result.value) {
-            updateMarca(select._id);
-          }
-        })
+        title: "¿Estas seguro?",
+        text: "Esta acción no se puede revertir",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, editar Marca",
+      }).then((result) => {
+        if (result.value) {
+          updateMarca(select._id);
+        }
+      })
       : Swal.fire({
-          title: "¿Estas seguro?",
-          text: "Esta acción no se puede revertir",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Si, agregar Marca",
-        }).then((result) => {
-          if (result.value) {
-            createMarca();
-            getBrands();
-          }
-        });
+        title: "¿Estas seguro?",
+        text: "Esta acción no se puede revertir",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, agregar Marca",
+      }).then((result) => {
+        if (result.value) {
+          createMarca();
+          getBrands();
+        }
+      });
   };
   const createMarca = async () => {
     try {
       const resp = await fetchContoken(
-        `api/marca`,
+        `api/brands`,
         {
-          nombre: values.name,
+          name: values.name,
+          description: values.description,
         },
         "POST"
       );
       setValues({
         name: "",
+        description: "",
       });
       setTouched({
         name: false,
@@ -135,14 +135,16 @@ export const BrandAdminPage = () => {
   const updateMarca = async (id: string) => {
     try {
       const resp = await fetchContoken(
-        `api/marca/${id}`,
+        `api/brands/${id}`,
         {
-          nombre: values.name,
+          name: values.name,
+          description: values.description,
         },
         "PUT"
       );
       setValues({
         name: "",
+        description: "",
       });
       setTouched({
         name: false,
@@ -168,7 +170,7 @@ export const BrandAdminPage = () => {
   };
   const deleteMarca = async (id: string) => {
     try {
-      const resp = await fetchContoken(`api/marca/${id}`, {}, "DELETE");
+      const resp = await fetchContoken(`api/brands/${id}`, {}, "DELETE");
       getBrands();
       Swal.fire({
         title: "Categoría eliminada",
@@ -187,7 +189,7 @@ export const BrandAdminPage = () => {
       console.log(error);
     }
   };
-  const handleDelete=(id: string)=>{
+  const handleDelete = (id: string) => {
     Swal.fire({
       title: "¿Estas seguro?",
       text: "Esta acción no se puede revertir",
@@ -204,10 +206,11 @@ export const BrandAdminPage = () => {
     );
   }
   const setBrand = (marca: MarcaI) => {
-    if (marca.nombre.length > 0) {
+    if (marca.name.length > 0) {
       setActive(true);
       setValues({
-        name: marca.nombre,
+        name: marca.name,
+        description: marca.description,
       });
       setSelect(marca);
     }
@@ -217,7 +220,8 @@ export const BrandAdminPage = () => {
     const marca = brands.find((m) => m._id === id);
     if (marca) {
       setValues({
-        name: marca.nombre,
+        name: marca.name,
+        description: marca.description,
       });
     }
   };
@@ -225,6 +229,7 @@ export const BrandAdminPage = () => {
   const handleCancel = () => {
     setValues({
       name: "",
+      description: "",
     });
     setActive(false);
     setSelect({} as MarcaI);
@@ -249,12 +254,33 @@ export const BrandAdminPage = () => {
                 onBlur={handleBlur}
                 autoComplete="off"
                 className="w-full border-2 border-gray-300 px-2 py-1"
-                placeholder="Ingrese el nombre de la categoría"
+                placeholder="Ingrese el name de la categoría"
               />
             </div>
             {touched.name && errors.name && (
               <p className="text-red-600 text-left max-w-md w-full">
                 {errors.name}
+              </p>
+            )}
+            <div className="text-left mb-2">
+              <label htmlFor="description" className="mb-2">
+                Descripción de la Marca
+              </label>
+              <input
+                type="text"
+                name="description"
+                id="description"
+                value={values.description}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                autoComplete="off"
+                className="w-full border-2 border-gray-300 px-2 py-1"
+                placeholder="Ingrese el name de la categoría"
+              />
+            </div>
+            {touched.description && errors.description && (
+              <p className="text-red-600 text-left max-w-md w-full">
+                {errors.description}
               </p>
             )}
             {active ? (
@@ -304,9 +330,9 @@ export const BrandAdminPage = () => {
                 <thead>
                   <tr>
                     <th className="th">ID</th>
-                    <th className="th">Nombre</th>
+                    <th className="th">name</th>
                     <th className="th">Estado</th>
-                    {canActions ? <th className="th">Acciones</th> : null}
+                    <th className="th">Acciones</th>
                   </tr>
                 </thead>
                 <tbody className="">
@@ -323,35 +349,33 @@ export const BrandAdminPage = () => {
                       </td>
                       <td className="td">
                         <div className=" leading-5 text-white text-left">
-                          {brand.nombre.toLocaleLowerCase()}
+                          {brand.name.toLocaleLowerCase()}
                         </div>
                       </td>
                       <td className="td text-left">
                         activado
                       </td>
-                      {canActions && (
-                        <td className="td text-sm text-right space-x-2 print:hidden">
-                          <div className="flex gap-2 items-center">
-                            <button
-                              onClick={() => {
-                                setBrand(brand);
-                              }}
-                              className="btn border-blue-500 text-blue-500 hover:bg-blue-700"
-                            >
-                              <i className="fas fa-edit"></i>
-                            </button>
+                      <td className="td text-sm text-right space-x-2 print:hidden">
+                        <div className="flex gap-2 items-center">
+                          <button
+                            onClick={() => {
+                              setBrand(brand);
+                            }}
+                            className="btn border-blue-500 text-blue-500 hover:bg-blue-700"
+                          >
+                            <i className="fas fa-edit"></i>
+                          </button>
 
-                            <button
-                              onClick={() => {
-                                handleDelete(brand._id);
-                              }}
-                              className="btn hover:bg-red-700 border-red-500 text-red-500"
-                            >
-                              <i className="fas fa-trash-alt"></i>
-                            </button>
-                          </div>
-                        </td>
-                      )}
+                          <button
+                            onClick={() => {
+                              handleDelete(brand._id);
+                            }}
+                            className="btn hover:bg-red-700 border-red-500 text-red-500"
+                          >
+                            <i className="fas fa-trash-alt"></i>
+                          </button>
+                        </div>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -365,9 +389,8 @@ export const BrandAdminPage = () => {
                 {Array.from({ length: quantity }, (_, i) => (
                   <li
                     key={i}
-                    className={`btn-page ${
-                      i + 1 === currentPage ? "active" : ""
-                    }`}
+                    className={`btn-page ${i + 1 === currentPage ? "active" : ""
+                      }`}
                     onClick={() => {
                       handleSearchPage(i);
                     }}
