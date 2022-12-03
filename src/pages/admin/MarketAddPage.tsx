@@ -13,8 +13,8 @@ import { baseUrl } from "../../utils";
 
 export const MarketAddPage = () => {
   const { user } = useContext(AuthContext);
-  const {MyLocation} = useContext(MapContext);
-  const {handleExistMarket,id,setId}=useMarket();
+  const { MyLocation } = useContext(MapContext);
+  const { handleExistMarket, id, setId } = useMarket();
   const { pathname } = useLocation();
   const path = pathname.split("/")[3];
   const {
@@ -115,8 +115,8 @@ export const MarketAddPage = () => {
     });
   };
 
-  const handleCreate=()=>{
-    if(id){
+  const handleCreate = () => {
+    if (id) {
       Swal.fire({
         icon: "warning",
         title: "Usted ya tiene una bodega",
@@ -159,7 +159,7 @@ export const MarketAddPage = () => {
       image,
     } = values;
     const resp = await fetchContoken(
-      `api/bodega/${id}`,
+      `api/bodega/${ id }`,
       {
         nombre: name,
         descripcion: description,
@@ -192,7 +192,7 @@ export const MarketAddPage = () => {
     });
   };
 
-  const handleUpdate=()=>{
+  const handleUpdate = () => {
     Swal.fire({
       title: "¿Estas seguro?",
       text: "Esta acción no se puede revertir",
@@ -209,16 +209,16 @@ export const MarketAddPage = () => {
     }
     );
   }
-  
+
 
   // console.log(values);
   // console.log(errors);
   // if market is not null then we are editing
 
   const chargeMarket = async () => {
-    const { uid } = user;
+    const { uuid } = user;
     const resp = await fetchContoken(
-      `api/usuarios/datosBodega/${uid}`,
+      `api/usuarios/datosBodega/${ uuid }`,
       {},
       "POST"
     );
@@ -240,8 +240,8 @@ export const MarketAddPage = () => {
         // longitude: bodega[0].longitudDeBodega?bodega[0].longitudDeBodega:MyLocation[1],
         // latitude:`${MyLocation[1]}`,
         // longitude:`${MyLocation[0]}`,
-        latitude:bodega[0].latitudDeBodega,
-        longitude:bodega[0].longitudDeBodega,
+        latitude: bodega[0].latitudDeBodega,
+        longitude: bodega[0].longitudDeBodega,
         // socialMedia: bodega[0].socialMedia || "",
         yape: bodega[0].yape || "",
         image: bodega[0].imagen || "",
@@ -258,21 +258,21 @@ export const MarketAddPage = () => {
   useEffect(() => {
     setValues({
       ...values,
-      latitude: `${MyLocation[1]}`,
-      longitude: `${MyLocation[0]}`,
+      latitude: `${ MyLocation[1] }`,
+      longitude: `${ MyLocation[0] }`,
     });
   }, [MyLocation])
-  
+
 
   useEffect(() => {
     if (path === "agregar")
-    setValues({
-      ...values,
-      latitude: `${MyLocation[1]}`,
-      longitude: `${MyLocation[0]}`,
-    });
+      setValues({
+        ...values,
+        latitude: `${ MyLocation[1] }`,
+        longitude: `${ MyLocation[0] }`,
+      });
   }, [MyLocation]);
-  
+
 
   // console.log(errors, "errors");
   return (

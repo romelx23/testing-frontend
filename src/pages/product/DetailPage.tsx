@@ -91,9 +91,10 @@ export const DetailPage = () => {
 
   const getProductId = async () => {
     try {
-      const product = `${baseUrl}/api/products/${id}`;
-      const resp = await fetch(product);
-      const { producto, bodega }: ProductoId = await resp.json();
+      const productFetch = `${ baseUrl }/api/product
+      s/${ id }`;
+      const resp = await fetch(productFetch);
+      const { product, bodega }: ProductoId = await resp.json();
       if (producto.name) setProducto(producto);
       console.log(producto);
       if (bodega.nombre) setMarket(bodega);
@@ -114,7 +115,7 @@ export const DetailPage = () => {
       let clientX = (x / mWidth) * 200;
       let clientY = (y / mHeight) * 200;
       if (zoomImg.current) {
-        zoomImg.current.style.transform = `translate(-${clientX}px, -${clientY}px) scale(1.3)`;
+        zoomImg.current.style.transform = `translate(-${ clientX }px, -${ clientY }px) scale(1.3)`;
       }
     }
   };

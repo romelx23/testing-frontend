@@ -18,7 +18,7 @@ export const useFvorite = () => {
   const getFavorites = async () => {
     try {
       const response = await fetchContoken(
-        `api/productos/favorite/${user.uid}`,
+        `api/productos/favorite/${user.uuid}`,
         {},
         "GET"
       );

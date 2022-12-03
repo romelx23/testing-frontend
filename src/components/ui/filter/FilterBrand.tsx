@@ -35,13 +35,13 @@ export const FilterBrand = () => {
   };
 
   const handleFilter = () => {
-    if(!itemRef.current){
+    if (!itemRef.current) {
       return;
     }
     const containerItems = itemRef.current;
     if (search.length > 0) {
       const filtered = brands.filter((item) =>
-        item.nombre.toLowerCase().includes(search.toLowerCase())
+        item.name.toLowerCase().includes(search.toLowerCase())
       );
       // setCategorias(filtered);
       const brandSelected = containerItems.querySelectorAll(
@@ -53,7 +53,7 @@ export const FilterBrand = () => {
       });
       filtered.forEach((item) => {
         const category = containerItems.querySelector(
-          `.brand-item[data-category="${item.nombre}"]`
+          `.brand-item[data-category="${ item.name }"]`
         );
         category?.classList.add("active");
       });
@@ -90,15 +90,15 @@ export const FilterBrand = () => {
       </div>
       <div className="select-content" ref={itemRef}>
         {marcas.map((brand) => (
-          <div key={brand._id} className="flex px-4 category-item brand-item" data-category={brand.nombre}>
+          <div key={brand._id} className="flex px-4 category-item brand-item" data-category={brand.name}>
             <label className="space-x-2 hover:cursor-pointer w-full text-left">
               <input
                 type="checkbox"
                 name="category"
-                value={brand.nombre}
-                onChange={() => handleSelect(brand.nombre)}
+                value={brand.name}
+                onChange={() => handleSelect(brand.name)}
               />
-              <span>{brand.nombre}</span>
+              <span>{brand.name}</span>
             </label>
           </div>
         ))}

@@ -26,6 +26,7 @@ export const Product_INITIAL_STATE: ProductState = {
   },
   category: {
     name: "",
+    description: "",
   },
   products: [],
   productsFilter: [],

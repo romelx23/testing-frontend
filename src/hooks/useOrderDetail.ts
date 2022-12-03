@@ -14,8 +14,8 @@ export const useOrderDetail = () => {
     bodega: {},
     fecha: "",
     importe: 0,
-    nombre: "",
-    usuario: "",
+    name: "",
+    user: "",
     status: "ordenado",
   } as Order);
   // productos del pedido

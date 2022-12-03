@@ -18,7 +18,7 @@ export const Product: FC<Props> = ({ product }) => {
   const [favorite, setFavorite] = useState(false);
   const { user } = useContext(AuthContext);
   const { pathname } = useLocation();
-  const path = `/${pathname.split("/")[1]}/${pathname.split("/")[2]}/${pathname.split("/")[3]
+  const path = `/${ pathname.split("/")[1] }/${ pathname.split("/")[2] }/${ pathname.split("/")[3]
     }`;
   // console.log(path);
   const toggleFavorite = () => {
@@ -63,7 +63,7 @@ export const Product: FC<Props> = ({ product }) => {
             bodega: {
               ...bodega,
             },
-            cantidad: 1,
+            cantidad: 1
           };
           addToCart(productoCarrito);
           Swal.fire("Producto agregado", "", "success");
@@ -80,7 +80,7 @@ export const Product: FC<Props> = ({ product }) => {
 
   return (
     <div className="btn-product relative" title={nombre}>
-      {user.rol == "BODEGUERO_ROLE" &&
+      {user.role.name == "BODEGUERO_ROLE" &&
         path === "/gestion/pedidos/actualizar" ? (
         <input
           type="checkbox"
@@ -102,8 +102,8 @@ export const Product: FC<Props> = ({ product }) => {
       </button>
       <label htmlFor={_id} className="btn-select-label">
         <Link
-          to={`/home/${_id}`}
-          className={`card__product w-[260px] ${user.rol == "BODEGUERO_ROLE" &&
+          to={`/home/${ _id }`}
+          className={`card__product w-[260px] ${ user.role.name == "BODEGUERO_ROLE" &&
             path === "/gestion/pedidos/actualizar"
             ? "sm:w-[260px] pointer-events-none"
             : "sm:w-[332px]"

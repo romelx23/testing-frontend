@@ -56,7 +56,7 @@ export const ModalBrand: FC<Props> = ({ id }) => {
   const updateMarca = async (id: string) => {
     try {
       const resp = await fetchContoken(
-        `api/marca/${id}`,
+        `api/marca/${ id }`,
         {
           nombre: values.name,
         },
@@ -87,9 +87,9 @@ export const ModalBrand: FC<Props> = ({ id }) => {
     console.log(brandById);
   }, [id]);
   useEffect(() => {
-    if (brandById?.nombre!==undefined) {
+    if (brandById?.name !== undefined) {
       setValues({
-        name: brandById.nombre,
+        name: brandById.name,
       });
     }
     console.log(values);

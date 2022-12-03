@@ -35,13 +35,13 @@ export interface ProductoBodega{
 }
 
 export interface ProductoCarrito {
-  precio: number;
+  price: number;
   disponible: boolean;
   _id: string;
   name: string;
   descripcion?: string;
-  usuario: string;
-  categoria: Categoria;
+  user: string;
+  category: Categoria;
   img?: string;
   cantidad: number;
   bodega:Market;

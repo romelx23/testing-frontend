@@ -128,7 +128,7 @@ export const useCart = () => {
     }
   };
   const total = cart.reduce(
-    (total, product) => total + product.precio * product.cantidad,
+    (total, product) => total + product.price * product.cantidad,
     0
   );
 

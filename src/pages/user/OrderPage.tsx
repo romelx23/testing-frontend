@@ -4,7 +4,7 @@ import { LayoutProfile } from "../../components/layout";
 import { AuthContext } from "../../context/auth";
 import { UIContext } from "../../context/ui";
 import { fetchContoken } from "../../helpers";
-import { usePaginate,useOrderDetail } from "../../hooks";
+import { usePaginate, useOrderDetail } from "../../hooks";
 import {
   Order,
   OrderResponse,
@@ -16,7 +16,7 @@ export const OrderPage = () => {
   const [filterOrders, setFilterOrders] = useState<Order[]>([]);
   const { toggleModal } = useContext(UIContext);
   const [mode, setMode] = useState("tabla");
-  const {detail,getOrderDetails,orderDetail}=useOrderDetail();
+  const { detail, getOrderDetails, orderDetail } = useOrderDetail();
   const {
     currentPage,
     nextPage,
@@ -28,7 +28,7 @@ export const OrderPage = () => {
     numberPage,
     numberLastPage
   } = usePaginate(filterOrders);
-  
+
   const loadOrders = async () => {
     const resp = await fetchContoken(`api/pedido/user`, {}, "GET");
     const data: OrderResponse = await resp?.json();
@@ -43,7 +43,7 @@ export const OrderPage = () => {
   // abrir un modal para mostrar el detalle de la orden
   const handleDetail = (order: Order) => {
     toggleModal(true);
-    const {_id}=order;
+    const { _id } = order;
     getOrderDetails(_id);
   };
 
@@ -99,9 +99,8 @@ export const OrderPage = () => {
         </select>
         <button
           title="cuadricula"
-          className={`btn_model h-10 ${
-            mode === "cuadricula" && "btn_model_selected"
-          }`}
+          className={`btn_model h-10 ${ mode === "cuadricula" && "btn_model_selected"
+            }`}
           onClick={() => handleMode("cuadricula")}
         >
           <svg
@@ -121,9 +120,8 @@ export const OrderPage = () => {
         </button>
         <button
           title="tabla"
-          className={`btn_model h-10 ${
-            mode === "tabla" && "btn_model_selected"
-          }`}
+          className={`btn_model h-10 ${ mode === "tabla" && "btn_model_selected"
+            }`}
           onClick={() => handleMode("tabla")}
         >
           <svg
@@ -154,7 +152,7 @@ export const OrderPage = () => {
                   >
                     <div className="flex justify-between">
                       <h1>{i}.</h1>
-                      <h1>{item.nombre}</h1>
+                      <h1>{item.name}</h1>
                     </div>
                     <h1 className="flex justify-center font-semibold">
                       S/.{item.importe.toFixed(2)}
@@ -238,7 +236,7 @@ export const OrderPage = () => {
                             </td>
                             <td className="td">
                               <div className="text-white text-left">
-                                {item.nombre}
+                                {item.name}
                               </div>
                             </td>
                             <td className="td">
@@ -303,7 +301,7 @@ export const OrderPage = () => {
                         <a
                           href="#"
                           className={`btn-prev
-                ${currentPage > 0 && "disabled:bg-gray-300"}
+                ${ currentPage > 0 && "disabled:bg-gray-300" }
                 `}
                         >
                           Atrás
@@ -352,7 +350,7 @@ export const OrderPage = () => {
           )}
         </>
       </div>
-      <ModalOrderMarket orderDetail={orderDetail} detail={detail} handleDetail={handleDetail}/>
+      <ModalOrderMarket orderDetail={orderDetail} detail={detail} handleDetail={handleDetail} />
     </LayoutProfile>
   );
 };

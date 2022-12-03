@@ -27,7 +27,7 @@ export const ModalOrderMarket: FC<Props> = ({
   const statusChange = async (order: Order, status: Estado) => {
     const { _id } = order;
     const resp = await fetchContoken(
-      `api/pedido/status/${_id}`,
+      `api/pedido/status/${ _id }`,
       {
         status,
       },
@@ -108,7 +108,7 @@ export const ModalOrderMarket: FC<Props> = ({
                 <>
                   <p className="text-left ml-6">
                     <span className="font-semibold">Cliente:</span>{" "}
-                    {orderDetail.nombre}
+                    {orderDetail.name}
                   </p>
                   <p className="text-left ml-6">
                     <span className="font-semibold">Total:</span>{" "}
@@ -174,7 +174,7 @@ export const ModalOrderMarket: FC<Props> = ({
                 <button
                   // onClick={() => setEstado("ordenado")}
                   onClick={() => handleStatus("ordenado", orderDetail)}
-                  className={`estado-circle ${estado === "ordenado" ? "bg-green-600" : ""
+                  className={`estado-circle ${ estado === "ordenado" ? "bg-green-600" : ""
                     }`}
                 >
                   <i className="fas fa-shopping-basket"></i>
@@ -183,7 +183,7 @@ export const ModalOrderMarket: FC<Props> = ({
                 <div className="h-4 w-16 bg-white"></div>
                 <button
                   onClick={() => handleStatus("pendiente", orderDetail)}
-                  className={`estado-circle ${estado === "pendiente" ? "bg-blue-600" : ""
+                  className={`estado-circle ${ estado === "pendiente" ? "bg-blue-600" : ""
                     }`}
                 >
                   <i className="fas fa-dolly"></i>
@@ -192,7 +192,7 @@ export const ModalOrderMarket: FC<Props> = ({
                 <div className="h-4 w-16 bg-white"></div>
                 <button
                   onClick={() => handleStatus("atendido", orderDetail)}
-                  className={`estado-circle ${estado === "atendido" ? "bg-orange-600" : ""
+                  className={`estado-circle ${ estado === "atendido" ? "bg-orange-600" : ""
                     }`}
                 >
                   <i className="fas fa-check-circle"></i>
@@ -202,7 +202,7 @@ export const ModalOrderMarket: FC<Props> = ({
               <div className="estado-pedido-container mt-8">
                 <button
                   onClick={() => handleStatus("cancelado", orderDetail)}
-                  className={`estado-circle ${estado === "cancelado" ? "bg-red-600" : ""
+                  className={`estado-circle ${ estado === "cancelado" ? "bg-red-600" : ""
                     }`}
                 >
                   <i className="fas fa-times"></i>

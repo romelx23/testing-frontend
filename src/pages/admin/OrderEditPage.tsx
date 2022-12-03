@@ -40,21 +40,18 @@ export const OrderEditPage = () => {
   const { id } = useParams();
   const { user } = useContext(AuthContext);
   const { getOrderDetails, detail, orderDetail } = useOrderDetail();
-  const { productsMarket, products } = useProducts();
+  const { products } = useProducts();
   // productos por rol, depende de si es admin o bodeguero
-  // const productsByRole = user.rol === "ADMIN_ROLE" ? products : productsMarket;
-  const handleDelete = (id: string) => {
-    console.log(id);
-  };
-  useEffect(() => {
-    if (id) {
-      getOrderDetails(id);
-    }
-  }, []);
+  // const productsByRole = user.rol === "ADMIN_ROLE" ? products :   const handleDelete = (id: string) => {
+  // useEffect(() => {
+  //   if (id) {
+  //     getOrderDetails(id);
+  //   }
+  // }, []);
   return (
     <LayoutProfile>
       <div className="min-h-[85vh] flex flex-col gap-5 md:gap-0 md:grid md:grid-cols-2">
-        <div className="flex flex-col">
+        {/* <div className="flex flex-col">
           <form onSubmit={handleSubmit}>
             <div className="px-4">
               <h1 className="text-left mb-2 text-xl font-bold">
@@ -227,7 +224,7 @@ export const OrderEditPage = () => {
               </table>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </LayoutProfile>
   );
