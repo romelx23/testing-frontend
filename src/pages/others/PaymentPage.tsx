@@ -32,7 +32,7 @@ export const PaymentPage = () => {
       cancelButtonText: "No",
     }).then((result) => {
       if (result.value) {
-        navigate(`/home/${producto._id}`);
+        navigate(`/home/${ producto._id }`);
       }
     }
     );
@@ -93,7 +93,7 @@ export const PaymentPage = () => {
                   text-white print:border-none 
                     leading-5 text-left"
                     >
-                      {formatPrice(producto.precio * producto.cantidad)}
+                      {formatPrice(producto.price * producto.cantidad)}
                     </td>
                     <td
                       className="px-6 py-4 whitespace-no-wrap 
@@ -105,7 +105,7 @@ export const PaymentPage = () => {
                       className="px-6 py-4 whitespace-no-wrap 
                    text-white leading-5"
                     >
-                      <Link to={`/home/${producto._id}`}>
+                      <Link to={`/home/${ producto._id }`}>
                         <img
                           src={producto.img}
                           alt={producto.name}
@@ -115,7 +115,7 @@ export const PaymentPage = () => {
                     </td>
                     <td className="leading-5 text-white w-10">
                       <div className="flex flex-col justify-center items-center flex-1">
-                        <Link to={`/bodega/${producto.bodega._id}`}>
+                        <Link to={`/bodega/${ producto.bodega._id }`}>
                           <img
                             src={producto.bodega.imagen}
                             alt={producto.bodega.nombre}
@@ -195,7 +195,7 @@ export const PaymentPage = () => {
               <li
                 onClick={prevPage}
                 className={`btn-prev
-                ${currentPage > 0 && "disabled:bg-gray-300"}
+                ${ currentPage > 0 && "disabled:bg-gray-300" }
                 `}
               >
                 Atrás
