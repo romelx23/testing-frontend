@@ -40,7 +40,10 @@ export const ProvidersPage = () => {
                 <div className="flex justify-end px-8">
                     <Link
                         to="/admin/proveedores/agregar"
-                        className="btn border-green-500 text-green-500 hover:bg-green-700 print:hidden">
+                        className="btn border-green-500 text-green-500 hover:bg-green-700 print:hidden"
+                        title="Agregar Proveedor"
+                        id="btn-add-provider"
+                    >
                         Agregar Proveedor
                     </Link>
                 </div>

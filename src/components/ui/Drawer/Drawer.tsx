@@ -12,7 +12,7 @@ export const Drawer = () => {
 
   return (
     <div
-      className={`container-drawer ${ToggleMenu ? "drawer-show" : "drawer-hidden"
+      className={`container-drawer ${ ToggleMenu ? "drawer-show" : "drawer-hidden"
         } z-20 overflow-y-auto`}
     >
       <div className="flex w-full justify-between sm:justify-center sm:space-x-4">
@@ -30,6 +30,7 @@ export const Drawer = () => {
       <NavLink
         to="/user/profile"
         title="Perfil"
+        id="perfil"
         className="drawer-item"
         style={{ textDecoration: "none" }}
       >
@@ -52,6 +53,7 @@ export const Drawer = () => {
       <NavLink
         to="/user/dashboard"
         title="Dashboard"
+        id="Dashboard"
         className="drawer-item"
         style={{ textDecoration: "none" }}
       >
@@ -74,6 +76,7 @@ export const Drawer = () => {
       <NavLink
         to="/user/orders"
         title="Boletas"
+        id="boletas"
         className="drawer-item"
         style={{ textDecoration: "none" }}
       >
@@ -106,6 +109,7 @@ export const Drawer = () => {
 
           to="/admin"
           title="Admin"
+          id="admin"
           className="drawer-item items-center"
           style={{ textDecoration: "none" }}
         >
@@ -116,6 +120,7 @@ export const Drawer = () => {
 
           to="/admin/products"
           title="Admin Productos"
+          id="admin-productos"
           className="drawer-item items-center"
           style={{ textDecoration: "none" }}
         >
@@ -126,6 +131,7 @@ export const Drawer = () => {
 
           to="/admin/category"
           title="Admin Categorias"
+          id="admin-categorias"
           className="drawer-item items-center"
           style={{ textDecoration: "none" }}
         >
@@ -136,6 +142,7 @@ export const Drawer = () => {
 
           to="/admin/marcas"
           title="Gestionar Marcas"
+          id="gestionar-marcas"
           className="drawer-item items-center"
           style={{ textDecoration: "none" }}
         >
@@ -146,6 +153,7 @@ export const Drawer = () => {
 
           to="/admin/proveedores"
           title="Admin Usuarios"
+          id="admin-usuarios"
           className="drawer-item items-center"
           style={{ textDecoration: "none" }}
         >
@@ -159,6 +167,7 @@ export const Drawer = () => {
 
           to="/admin/ordenes"
           title="Admin Usuarios"
+          id="admin-usuarios"
           className="drawer-item items-center"
           style={{ textDecoration: "none" }}
         >
@@ -172,6 +181,7 @@ export const Drawer = () => {
 
           to="/admin/user"
           title="Admin Usuarios"
+          id="admin-usuarios"
           className="drawer-item items-center"
           style={{ textDecoration: "none" }}
         >
@@ -197,6 +207,7 @@ export const Drawer = () => {
             }}
             to="/gestion/productos"
             title="Gestionar Productos"
+            id="gestionar-productos"
             className="drawer-item items-center"
             style={{ textDecoration: "none" }}
           >
@@ -209,6 +220,7 @@ export const Drawer = () => {
             }}
             to="/gestion/categorias"
             title="Gestionar Categorias"
+            id="gestionar-categorias"
             className="drawer-item items-center"
             style={{ textDecoration: "none" }}
           >
@@ -221,6 +233,7 @@ export const Drawer = () => {
             }}
             to="/gestion/marcas"
             title="Gestionar Marcas"
+            id="gestionar-marcas"
             className="drawer-item items-center"
             style={{ textDecoration: "none" }}
           >
@@ -233,6 +246,7 @@ export const Drawer = () => {
             }}
             to="/gestion/bodega"
             title="Gestionar Bodega"
+            id="gestionar-bodega"
             className="drawer-item items-center"
             style={{ textDecoration: "none" }}
           >
@@ -245,6 +259,7 @@ export const Drawer = () => {
             }}
             to="/gestion/pedidos"
             title="Gestionar Pedidos"
+            id="gestionar-pedidos"
             className="drawer-item items-center"
             style={{ textDecoration: "none" }}
           >
@@ -257,6 +272,7 @@ export const Drawer = () => {
             }}
             to="/dashboard/pedidos"
             title="Boletas"
+            id="Boletas"
             className="drawer-item"
             style={{ textDecoration: "none" }}
           >

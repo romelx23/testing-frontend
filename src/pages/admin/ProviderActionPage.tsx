@@ -238,6 +238,8 @@ export const ProviderActionPage = () => {
                                 <button
                                     type="submit"
                                     className="w-full btn my-2 bg-blue-500 text-white hover:bg-blue-700"
+                                    title='Agregar Proveedor'
+                                    id='add-provider'
                                 >
                                     Agregar Proveedor
                                 </button>
@@ -250,6 +252,8 @@ export const ProviderActionPage = () => {
                                         <button
                                             type="submit"
                                             className="w-full btn my-2 bg-purple-500 text-white hover:bg-purple-700"
+                                            title='Actualizar Proveedor'
+                                            id='update-provider'
                                         >
                                             Actualizar Proveedor
                                         </button>
@@ -261,6 +265,8 @@ export const ProviderActionPage = () => {
                                                 <Link
                                                     to="/admin/proveedores"
                                                     className="btn bg-blue-500 text-white hover:bg-blue-700"
+                                                    title="Volver a Proveedores"
+                                                    id="volver"
                                                 >
                                                     Volver a Proveedores
                                                 </Link>
