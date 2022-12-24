@@ -152,8 +152,8 @@ export const Drawer = () => {
         <NavLink
 
           to="/admin/proveedores"
-          title="Admin Usuarios"
-          id="admin-usuarios"
+          title="Admin Proveedores"
+          id="admin-provider"
           className="drawer-item items-center"
           style={{ textDecoration: "none" }}
         >
