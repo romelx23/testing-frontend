@@ -1,7 +1,18 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { LayoutProfile } from '../../components/layout'
 
 export const OrderPage = () => {
+    const [order, setOrder] = useState([]);
+
+    const getOrders = async () => {
+        const res = await fetch('http://localhost:3001/api/order');
+        const data = await res.json();
+        setOrder(data);
+    }
+
+    useEffect(() => {
+        getOrders();
+    }, []);
     return (
         <LayoutProfile>
             <div className="w-full min-h-[80vh] print:flex print:justify-center">

@@ -13,12 +13,12 @@ interface OtherProps {
 }
 
 const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
-  const { touched, errors, isSubmitting, message,values} = props;
-  const {startLogin}=useContext(AuthContext);
-  const handleLogin=(e:React.FormEvent<HTMLFormElement>)=>{
+  const { touched, errors, isSubmitting, message, values } = props;
+  const { startLogin } = useContext(AuthContext);
+  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const {email,password}=values;
-    startLogin(email,password);
+    const { email, password } = values;
+    startLogin(email, password);
     // console.log(values,"values");
   }
 
@@ -29,6 +29,7 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
         <Field
           type="email"
           name="email"
+          id="email"
           placeholder="Ingrese su email"
           className="max-w-md w-full p-3 border-2 shadow-md rounded-3xl"
         />
@@ -39,6 +40,7 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
         <Field
           type="password"
           name="password"
+          id="password"
           placeholder="Ingrese su password"
           className="max-w-md w-full p-3 border-2 shadow-md rounded-3xl"
         />
@@ -46,7 +48,9 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
           <p className="text-red-600 text-left max-w-md w-full">{errors.password}</p>
         )}
 
-        <button onClick={()=>handleLogin} type="submit" className="btn-submit" disabled={isSubmitting}>
+        <button
+          id="btn-submit"
+          onClick={() => handleLogin} type="submit" className="btn-submit" disabled={isSubmitting}>
           Ingresar
         </button>
         {/* <button onClick={() => {
@@ -65,9 +69,9 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
           Iniciar sesión con Google
         </button> */}
         {
-            isSubmitting && (
-                <p className="text-green-600 text-center max-w-md w-full">Formulario enviado correctamente</p>
-            )
+          isSubmitting && (
+            <p className="text-green-600 text-center max-w-md w-full">Formulario enviado correctamente</p>
+          )
         }
       </Form>
     </div>
@@ -106,7 +110,7 @@ export const MyForm = withFormik<MyFormProps, FormValues>({
   handleSubmit: (values) => {
     // do submitting things
     console.log(values);
-    
+
   },
-  
+
 })(InnerForm);

@@ -34,7 +34,9 @@ export const ProvidersPage = () => {
     }
     return (
         <LayoutProfile>
-            <div className="w-full min-h-[80vh] print:flex print:justify-center">
+            <div
+                id="provider-page"
+                className="w-full min-h-[80vh] print:flex print:justify-center">
                 <div className="flex justify-end px-8">
                     <Link
                         to="/admin/proveedores/agregar"
@@ -46,7 +48,9 @@ export const ProvidersPage = () => {
                 <h1 className="text-left mb-2 text-xl ml-6 font-bold">
                     Proveedores
                 </h1>
-                <div className="py-2 overflow-x-auto px-6 pr-10 ">
+                <div
+                    id="table-providers"
+                    className="py-2 overflow-x-auto px-6 pr-10 ">
                     <div className="align-middle inline-block min-w-full shadow overflow-hidden bg-gray-900 shadow-dashboard px-8 pt-3 rounded-lg min-h-min print:bg-black print:px-0 print:pl-6 print:break-before-avoid-page">
                         {
                             providers.length > 0 ?
